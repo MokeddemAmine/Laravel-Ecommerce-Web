@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('content')
 <div class="container">
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('Home Page!') }}
+                    {{ __('Admin Home Page!') }}
                 </div>
             </div>
         </div>

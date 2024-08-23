@@ -21,3 +21,6 @@ Auth::routes(['verify'  => true]);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/user/profile',[ProfileController::class,'profilePage'])->name('user.profile')->middleware('auth');
+
+
+

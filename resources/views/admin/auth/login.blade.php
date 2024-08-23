@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 @section('js')
 {!! NoCaptcha::renderJs() !!}
 @endsection
@@ -7,19 +7,28 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">{{ __('Admin Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('admin.dashboard.checkLogin') }}">
                         @csrf
-
+                        @if (session('registerSuccess'))
+                            <div class="row mb-3">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-6">
+                                    <div class="alert alert-success fw-bold">
+                                        {{session('registerSuccess')}}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         <div class="row mb-3">
-                            <label for="user_login" class="col-md-4 col-form-label text-md-end">{{ __('User Login') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
 
                             <div class="col-md-6">
-                                <input id="user_login" type="text" class="form-control @error('user_login') is-invalid @enderror" name="user_login" value="{{ old('user_login') }}" placeholder="Enter your Email/Phone/Name " required autocomplete="user_login" autofocus>
+                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter your Email/Phone/Name " required autocomplete="email" autofocus>
 
-                                @error('user_login')
+                                @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -40,7 +49,18 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
+                        @if (session('errorResponse'))
+                            <div class="row mb-3">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-6">
+                                    <div class="alert alert-danger fw-bold">
+                                        {{session('errorResponse')}}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="row mb-3">
                             <div class="col-md-4"></div>
                             <div class="col-md-6">
@@ -56,6 +76,7 @@
                                 </div>
                             </div>
                         @endif
+
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
