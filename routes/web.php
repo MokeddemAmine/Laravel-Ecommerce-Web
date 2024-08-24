@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['verify'  => true]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact');
+Route::get('/shop', [App\Http\Controllers\HomeController::class, 'shop'])->name('shop');
+Route::get('/testimonial', [App\Http\Controllers\HomeController::class, 'testimonial'])->name('testimonial');
+Route::get('/why', [App\Http\Controllers\HomeController::class, 'why'])->name('why');
 
 Route::get('/user/profile',[ProfileController::class,'profilePage'])->name('user.profile')->middleware('auth');
 

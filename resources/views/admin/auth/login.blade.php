@@ -1,7 +1,5 @@
 @extends('admin.layouts.app')
-@section('js')
-{!! NoCaptcha::renderJs() !!}
-@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -57,22 +55,6 @@
                                     <div class="alert alert-danger fw-bold">
                                         {{session('errorResponse')}}
                                     </div>
-                                </div>
-                            </div>
-                        @endif
-
-                        <div class="row mb-3">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-6">
-                                {!! NoCaptcha::display() !!}
-                            </div>
-                        </div>
-
-                        @if ($errors->has('g-recaptcha-response'))
-                            <div class="row mb-3">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-6">
-                                    <strong class="text-danger">{{ $errors->first('g-recaptcha-response') }}</strong>
                                 </div>
                             </div>
                         @endif

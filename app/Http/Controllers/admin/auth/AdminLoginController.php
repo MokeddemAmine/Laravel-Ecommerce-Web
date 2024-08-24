@@ -26,7 +26,6 @@ class AdminLoginController extends Controller
         $request->validate([
             'email'     => ['required','email'],
             'password'  => ['required','string'],
-            'g-recaptcha-response' => 'required|captcha'
         ]);
         $data = $request->only('email','password');
 

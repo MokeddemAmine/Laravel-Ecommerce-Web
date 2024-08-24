@@ -1,7 +1,5 @@
 @extends('admin.layouts.app')
-@section('js')
-    {!! NoCaptcha::renderJs() !!}
-@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -85,13 +83,6 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-6">
-                                {!! NoCaptcha::display() !!}
                             </div>
                         </div>
                         
