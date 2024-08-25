@@ -135,40 +135,42 @@
             <div aria-labelledby="languages" class="dropdown-menu"><a rel="nofollow" href="#" class="dropdown-item"> <img src="{{asset('admin/img/flags/16/DE.png')}}" alt="English" class="mr-2"><span>German</span></a><a rel="nofollow" href="#" class="dropdown-item"> <img src="{{asset('admin/img/flags/16/FR.png')}}" alt="English" class="mr-2"><span>French  </span></a></div>
           </div>
           <!-- Log out               -->
-          <ul class="navbar-nav ms-auto">
-            <!-- Authentication Links -->
-            @guest('admin')
-                @if (Route::has('admin.dashboard.login'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.dashboard.login') }}">{{ __('Login') }}</a>
-                    </li>
-                @endif
+          <div class="list-inline-item">
+            <ul class="navbar-nav ">
+                <!-- Authentication Links -->
+                @guest('admin')
+                    @if (Route::has('admin.dashboard.login'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.dashboard.login') }}">{{ __('Login') }}</a>
+                        </li>
+                    @endif
 
-                @if (Route::has('admin.dashboard.register'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.dashboard.register') }}">{{ __('Register') }}</a>
-                    </li>
-                @endif
-            @else
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::guard('admin')->user()->name }}
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('admin.dashboard.logout') }}"
-                           onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                    @if (Route::has('admin.dashboard.register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.dashboard.register') }}">{{ __('Register') }}</a>
+                        </li>
+                    @endif
+                @else
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::guard('admin')->user()->name }}
                         </a>
 
-                        <form id="logout-form" action="{{ route('admin.dashboard.logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
-            @endguest
-        </ul>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('admin.dashboard.logout') }}"
+                              onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('admin.dashboard.logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                @endguest
+            </ul>
+          </div>
         </div>
       </div>
     </nav>

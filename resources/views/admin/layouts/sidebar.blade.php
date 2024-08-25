@@ -11,22 +11,12 @@
     <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
     <ul class="list-unstyled" id="sidebar-links-icons">
             <li><a href="{{route('admin.dashboard.index')}}"> <i class="icon-home"></i>Home </a></li>
-            <li><a href="{{route('admin.dashboard.tables')}}"> <i class="icon-grid"></i>Tables </a></li>
-            <li><a href="{{route('admin.dashboard.charts')}}"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-            <li><a href="{{route('admin.dashboard.forms')}}"> <i class="icon-padnote"></i>Forms </a></li>
-            <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Example dropdown </a>
-              <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                <li><a href="#">Page</a></li>
-                <li><a href="#">Page</a></li>
-                <li><a href="#">Page</a></li>
+            
+            <li><a href="#categoryDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Categories </a>
+              <ul id="categoryDropdown" class="collapse list-unstyled ">
+                <li><a href="{{route('admin.dashboard.categories.index')}}">Show All </a></li>
+                <li><a href="{{route('admin.dashboard.categories.create')}}">Create </a></li>
               </ul>
             </li>
-            <li><a href="{{route('admin.dashboard.login')}}"> <i class="icon-logout"></i>Login page </a></li>
-    </ul><span class="heading">Extras</span>
-    <ul class="list-unstyled">
-      <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
-      <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
-      <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
-    </ul>
   </nav>
   <!-- Sidebar Navigation end-->

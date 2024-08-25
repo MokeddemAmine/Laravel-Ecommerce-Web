@@ -15,13 +15,5 @@ class AdminHomeController extends Controller
 
         return view('admin.index');
     }
-    public function charts(){
-        return view('admin.charts');
-    }
-    public function forms(){
-        return view('admin.forms');
-    }
-    public function tables(){
-        return view('admin.tables');
-    }
+    
 }

@@ -72,6 +72,12 @@
   <script src="{{asset('admin/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
   <script src="{{asset('admin/js/charts-home.js')}}"></script>
   <script src="{{asset('admin/js/front.js')}}"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script src="{{asset('admin/js/main.js')}}"></script>
+  
+  @yield('js-special')
+
 </body>
 </html>
