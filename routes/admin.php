@@ -17,8 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('/admin/dashboard/')->name('admin.dashboard.')->group(function(){
-    Route::get('home',[AdminHomeController::class,'home'])->name('home');
+Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
+
+    Route::controller(AdminHomeController::class)->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/charts','charts')->name('charts');
+        Route::get('/forms','forms')->name('forms');
+        Route::get('/tables','tables')->name('tables');
+    });
+
     Route::controller(AdminLoginController::class)->group(function(){
         Route::get('login','login')->name('login');
         Route::post('login','checkLogin')->name('checkLogin');

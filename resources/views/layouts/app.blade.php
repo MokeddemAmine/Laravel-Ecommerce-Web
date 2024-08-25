@@ -45,7 +45,7 @@
   
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  ">
-              <li class="nav-item active">
+              <li class="nav-item ">
                 <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
@@ -205,6 +205,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{asset('js/custom.js')}}"></script>
+    <script src="{{asset('js/main.js')}}"></script>
 
 </body>
 </html>

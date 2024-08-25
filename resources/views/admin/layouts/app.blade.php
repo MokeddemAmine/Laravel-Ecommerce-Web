@@ -2,12 +2,15 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="robots" content="all,follow">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title','Admin')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -18,67 +21,57 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @yield('js')
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="{{asset('admin/vendor/bootstrap/css/bootstrap.min.css')}}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="{{asset('admin/vendor/font-awesome/css/font-awesome.min.css')}}">
+    <!-- Custom Font Icons CSS-->
+    <link rel="stylesheet" href="{{asset('admin/css/font.css')}}">
+    <!-- Google fonts - Muli-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="{{asset('admin/css/style.default.css')}}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="{{asset('admin/css/custom.css')}}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{{asset('admin/img/favicon.ico')}}">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ route('admin.dashboard.home') }}">
-                    Admin
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        @include('admin.layouts.navbar')
+        
+        <div class="d-flex align-items-stretch">
+            @include('admin.layouts.sidebar')
+            <div class="page-content">
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+                @yield('content')
 
-                    </ul>
+                <footer class="footer">
+                    <div class="footer__block block no-margin-bottom">
+                      <div class="container-fluid text-center">
+                        <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                         <p class="no-margin-bottom">2018 &copy; Your company. Download From <a target="_blank" href="https://templateshub.net">Templates Hub</a>.</p>
+                      </div>
+                    </div>
+                </footer>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest('admin')
-                            @if (Route::has('admin.dashboard.login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.dashboard.login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('admin.dashboard.register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.dashboard.register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::guard('admin')->user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('admin.dashboard.logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('admin.dashboard.logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
             </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+            
+        </div>
     </div>
+    
+  <!-- JavaScript files-->
+  <script src="{{asset('admin/vendor/jquery/jquery.min.js')}}"></script>
+  <script src="{{asset('admin/vendor/popper.js/umd/popper.min.js')}}"> </script>
+  <script src="{{asset('admin/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('admin/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
+  <script src="{{asset('admin/vendor/chart.js/Chart.min.js')}}"></script>
+  <script src="{{asset('admin/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
+  <script src="{{asset('admin/js/charts-home.js')}}"></script>
+  <script src="{{asset('admin/js/front.js')}}"></script>
+  <script src="{{asset('admin/js/main.js')}}"></script>
 </body>
 </html>
