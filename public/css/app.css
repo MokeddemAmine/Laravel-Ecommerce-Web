@@ -1,4 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);
 @charset "UTF-8";
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
@@ -11965,4 +11964,33 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+a {
+  text-decoration: none !important;
+}
+
+.img-fluid {
+  width: 100% !important;
+  height: 400px !important;
+}
+.img-fluid img {
+  -o-object-fit: cover !important;
+     object-fit: cover !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.products .card {
+  position: relative;
+  overflow: hidden;
+}
+.products .card .product-action {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  transition:.3s;
+}
+.products .card:hover .product-action {
+  bottom: 0px;
 }

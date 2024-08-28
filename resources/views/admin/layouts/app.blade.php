@@ -22,9 +22,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="{{asset('admin/vendor/bootstrap/css/bootstrap.min.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('admin/vendor/bootstrap/css/bootstrap.min.css')}}"> --}}
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="{{asset('admin/vendor/font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <!-- Custom Font Icons CSS-->
     <link rel="stylesheet" href="{{asset('admin/css/font.css')}}">
     <!-- Google fonts - Muli-->
@@ -66,7 +68,7 @@
   <!-- JavaScript files-->
   <script src="{{asset('admin/vendor/jquery/jquery.min.js')}}"></script>
   <script src="{{asset('admin/vendor/popper.js/umd/popper.min.js')}}"> </script>
-  <script src="{{asset('admin/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+  {{-- <script src="{{asset('admin/vendor/bootstrap/js/bootstrap.min.js')}}"></script> --}}
   <script src="{{asset('admin/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
   <script src="{{asset('admin/vendor/chart.js/Chart.min.js')}}"></script>
   <script src="{{asset('admin/vendor/jquery-validation/jquery.validate.min.js')}}"></script>

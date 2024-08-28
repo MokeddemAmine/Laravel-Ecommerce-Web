@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class AdminCategoryController extends Controller
@@ -36,9 +37,9 @@ class AdminCategoryController extends Controller
     }
 
     public function show(Category $category){
-        
+        $products = $category->products()->paginate(8);
         if($category){
-            return view('admin.category.show',compact('category'));
+            return view('admin.category.show',compact('category','products'));
         }
         return view($this->home);
     }

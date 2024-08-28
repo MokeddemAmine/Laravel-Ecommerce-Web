@@ -52,9 +52,8 @@
     <script>
         $(document).ready(function(){
             $('.btn-delete-category').click(function(){
-                console.log($(this));
                 swal.fire({
-                    title:'Are You Sure to delete this',
+                    title:'Are You Sure want to delete this',
                     text:'this delete will be parmanent',
                     icon:'warning',
                     showDenyButton: true,

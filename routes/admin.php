@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AdminCategoryController;
 use App\Http\Controllers\admin\AdminHomeController;
+use App\Http\Controllers\admin\AdminProductController;
 use App\Http\Controllers\admin\auth\AdminLoginController;
 use App\Http\Controllers\admin\auth\AdminRegisterController;
 use Illuminate\Support\Facades\Auth;
@@ -37,12 +38,22 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
 
     });
 
+    Route::controller(AdminProductController::class)->group(function(){
+        Route::get('/products','index')->name('products.index');
+        Route::get('/products/create','create')->name('products.create');
+        Route::post('/products','store')->name('products.store');
+        Route::post('/products/{product}','show')->name('products.show');
+        Route::get('/products/{product}/edit','edit')->name('products.edit');
+        Route::put('/products/{product}','update')->name('products.update');
+        Route::delete('/products/{product}','destroy')->name('products.destroy');
+    });
+
     Route::controller(AdminLoginController::class)->group(function(){
         Route::get('login','login')->name('login');
         Route::post('login','checkLogin')->name('checkLogin');
         Route::post('logout','logout')->name('logout');
     });
-    
+
     Route::controller(AdminRegisterController::class)->group(function(){
         Route::get('register','register')->name('register');
         Route::post('register','store')->name('store');

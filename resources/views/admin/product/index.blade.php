@@ -1,18 +1,19 @@
 @extends('admin.layouts.app')
 
-@section('title','Admin Dashboard Categories')
+@section('title','Admin Dashboard Products')
 
 @section('content')
       
         <div class="page-header">
-          <div class="container-fluid d-flex align-items-center">
-            <a href="{{route('admin.dashboard.categories.index')}}" class="text-capitalize fw-bold text-decoration-none fs-5">categories</a>
-            <span class="mx-3">/</span>
-            <h2 class="h5 no-margin-bottom text-capitalize">{{$category->name}}</h2>
+          <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Show All Products</h2>
           </div>
         </div>
-        <div class="products">
-          @if (count($products))
+        @if (session('successMessage'))
+            <div class="fw-bold text-success m-5">{{session('successMessage')}}</div>
+        @endif
+        <a href="{{route('admin.dashboard.products.create')}}" class="btn btn-primary my-3 mx-5">Add New Product</a>
+        @if (count($products))
           <div class="row products mx-3">
             @foreach ($products as $product)
               <div class="col-md-6 col-lg-4 col-xxl-3">
@@ -20,14 +21,14 @@
                     @php
                         $images = json_decode($product->images);
                     @endphp
-                    <div class="img-fluid">
+                    <div class="img-fluid w-100 h-100">
                       <div id="carouselProduct{{$product->id}}" class="carousel slide w-100 h-100">
                         <div class="carousel-inner w-100 h-100">
                           @foreach ($images as $image)
                             <div class="carousel-item w-100 h-100
                              <?php if($image == $images[0]) echo 'active'; ?>
                             ">
-                              <img src="{{asset('storage/'.$image)}}" alt="{{$product->title}}"  class="w-100 h-100">
+                              <img src="{{asset('storage/'.$image)}}" alt="{{$product->title}}" class="w-75 h-75">
                             </div>
                           @endforeach
                         </div>
@@ -75,8 +76,36 @@
         @else
             <div class="alert alert-info mx-5">There are no product now</div>
         @endif
-          
-        </div>
-
+        
+        
 
 @endsection
+
+@section('js-special')
+<script>
+    $(document).ready(function(){
+        $('.delete-product').click(function(){
+            swal.fire({
+                title:'Are You Sure want to delete this',
+                text:'this delete will be parmanent',
+                icon:'warning',
+                showDenyButton: true,
+                confirmButtonText: "Delete",
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+            }).then((result) => {
+                if(result.isConfirmed){
+                    $(this).siblings('.form-delete-product').submit();
+                }
+            });
+        })
+
+        // set the width of the current windwo (desktop , tablet or mobile)
+        var width = window.innerWidth;
+
+        // Set the width in the hidden input field
+        $('.window_width').val(width);
+    })
+    
+</script>
+@endsection  

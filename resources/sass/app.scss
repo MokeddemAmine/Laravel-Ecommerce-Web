@@ -1,8 +1,41 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+a{
+    text-decoration: none !important;
+}
+.img-fluid{
+
+    width:100% !important;
+    height:400px !important;
+
+    img{
+    object-fit: cover !important;
+    width:100% !important;
+    height:100% !important;
+    }
+}
+
+.products{
+    .card{
+        position: relative;
+        overflow: hidden;
+        .product-action{
+            position:absolute;
+            bottom:-20px;
+            left:0;
+            right:0;
+            transition:.3s;
+        }
+        &:hover{
+            .product-action{
+                bottom:0px;
+            }
+        }
+    }
+}
