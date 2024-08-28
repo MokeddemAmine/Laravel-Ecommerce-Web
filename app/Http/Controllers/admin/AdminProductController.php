@@ -174,5 +174,21 @@ class AdminProductController extends Controller
         return redirect()->route('admin.dashboard.products.index')->with('successMessage','Product Deleted with success');
     }
 
+
+    // search method 
+    public function search(Request $request){
+        $search = $request->search;
+        $category = Category::where('name','LIKE','%'.$search.'%')->first();
+
+        $products = NULL;
+        if($category){
+            $products = Product::where('title','LIKE','%'.$search.'%')->orWhere('category_id',$category->id)->paginate(8);
+        }else{
+            $products = Product::where('title','LIKE','%'.$search.'%')->paginate(8);
+        }
+
+        return view('admin.search',compact('products','search'));
+    }
+
      
 }

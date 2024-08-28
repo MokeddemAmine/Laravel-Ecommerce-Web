@@ -4,7 +4,7 @@
         <div class="search-inner d-flex align-items-center justify-content-center">
           <div class="close-btn">Close <i class="fa fa-close"></i></div>
           {{-- search form --}}
-          <form id="searchForm" action="#" method="GET">
+          <form id="searchForm" action="{{route('admin.dashboard.products.search')}}" method="GET">
             @csrf
             <div class="form-group">
               <input type="search" name="search" placeholder="What are you searching for...">
