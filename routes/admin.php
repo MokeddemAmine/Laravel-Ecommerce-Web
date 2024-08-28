@@ -24,6 +24,9 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
 
     Route::controller(AdminHomeController::class)->group(function(){
         Route::get('/','index')->name('index');
+        Route::get('/profile','profile')->name('profile');
+        Route::put('/profile/{admin}','update')->name('update');
+        Route::put('/profile/updatePass/{admin}','updatePassword')->name('updatePassword');
     });
 
     Route::controller(AdminCategoryController::class)->group(function(){
@@ -53,7 +56,7 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
     Route::controller(AdminLoginController::class)->group(function(){
         Route::get('login','login')->name('login');
         Route::post('login','checkLogin')->name('checkLogin');
-        Route::post('logout','logout')->name('logout');
+        Route::post('logout','logout')->name('logout')->middleware('auth:admin');
     });
 
     Route::controller(AdminRegisterController::class)->group(function(){

@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class AdminProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    
     public function index(){
 
         $products = Product::paginate(8);
@@ -51,7 +56,7 @@ class AdminProductController extends Controller
                 'description'   => $request->description,
                 'price'         => floatval( $request->price),
                 'quantity'      => $request->quantity,
-                'cat_id'        => $request->category,
+                'category_id'        => $request->category,
                 'images'        => $images,
             ]);
     
@@ -147,7 +152,7 @@ class AdminProductController extends Controller
             'description'   => $request->description,
             'price'         => floatval( $request->price),
             'quantity'      => $request->quantity,
-            'cat_id'        => $request->category,
+            'category_id'        => $request->category,
             'images'        => json_encode($images),
         ]);
         

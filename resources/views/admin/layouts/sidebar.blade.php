@@ -1,17 +1,29 @@
 <!-- Sidebar Navigation-->
 <nav id="sidebar">
     <!-- Sidebar Header-->
-    <div class="sidebar-header d-flex align-items-center">
-      <div class="avatar"><img src="{{asset('admin/img/avatar-6.jpg')}}" width="50" alt="..." class=" rounded-circle"></div>
-      <div class="title">
-        <h1 class="h5">Mark Stephen</h1>
-        <p>Web Designer</p>
+    @auth
+      <div class="sidebar-header d-flex align-items-center">
+        <div class="avatar">
+          @if (Auth::guard('admin')->user()->profile_picture)
+            <img src="{{asset('storage/'.Auth::guard('admin')->user()->profile_picture)}}" width="50" alt="..." class=" rounded-circle">
+          @else
+            <img src="{{asset('admin/img/profile.jpg')}}" width="50" alt="..." class=" rounded-circle">
+          @endif
+        </div>
+        <div class="title">
+          <h1 class="h5">{{Auth::guard('admin')->user()->name}}</h1>
+          <p>Admin</p>
+        </div>
       </div>
-    </div>
+    @endauth
     <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
     <ul class="list-unstyled" id="sidebar-links-icons">
-            <li><a href="{{route('admin.dashboard.index')}}"> <i class="icon-home"></i>Home </a></li>
-            
+          @guest('admin')
+            <li><a href="{{route('admin.dashboard.login')}}"> <i class="icon-home"></i>Login </a></li>
+            <li><a href="{{route('admin.dashboard.register')}}"> <i class="icon-home"></i>Register </a></li>
+          @else
+          
+            <li><a href="{{route('admin.dashboard.index')}}"> <i class="icon-home"></i>Home </a></li>  
             <li><a href="#categoryDropdown" aria-expanded="false" data-bs-toggle="collapse"> <i class="icon-windows"></i>Categories </a>
               <ul id="categoryDropdown" class="collapse list-unstyled ">
                 <li><a href="{{route('admin.dashboard.categories.index')}}">Show All </a></li>
@@ -25,6 +37,8 @@
                 <li><a href="{{route('admin.dashboard.products.create')}}">Create </a></li>
               </ul>
             </li>
+          @endguest
+            
     </ul>
   </nav>
   <!-- Sidebar Navigation end-->

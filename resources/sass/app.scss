@@ -39,3 +39,9 @@ a{
         }
     }
 }
+.img-profile{
+    width:200px;
+    @media(max-width:767px){
+        width:100px;
+    }
+}

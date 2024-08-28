@@ -12,6 +12,11 @@ class AdminCategoryController extends Controller
 
     protected $home = 'admin.category.index';
 
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    
     public function index(){
         $categories = Category::all();
         return view($this->home,compact('categories'));

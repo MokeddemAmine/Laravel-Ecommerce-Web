@@ -11989,8 +11989,17 @@ a {
   bottom: -20px;
   left: 0;
   right: 0;
-  transition:.3s;
+  transition: 0.3s;
 }
 .products .card:hover .product-action {
   bottom: 0px;
+}
+
+.img-profile {
+  width: 200px;
+}
+@media (max-width: 767px) {
+  .img-profile {
+    width: 100px;
+  }
 }
