@@ -57,206 +57,42 @@
         </h2>
       </div>
       <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="{{asset('images/p1.png')}}" alt="">
+        @if (count($products))
+            @foreach ($products as $product)
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="box">
+
+                    @php
+                        $images = json_decode($product->images);
+                    @endphp
+                    <div class="img-box">
+                      <img src="{{asset('storage/'.$images[0])}}" alt="">
+                    </div>
+                    <div class="detail-box">
+                      <h6>{!!Str::limit($product->title,30)!!}</h6>
+                      <h6>
+                        <span>${{$product->price}}</span>
+                      </h6>
+                    </div>
+                    <div class="new">
+                      <span>
+                        New
+                      </span>
+                    </div>
+
+                    <form action="{{route('products.show',$product->id)}}" method="POST">
+                      @csrf
+                      @method("GET")
+                      <input type="hidden" name="window_width" id="window_width" />
+                      <input type="submit" value="Show More" class="border-0 text-primary">
+                    </form>
+                </div>
               </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $200
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="{{asset('images/p2.png')}}" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Watch
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $300
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="{{asset('images/p3.png')}}" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Teddy Bear
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $110
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="{{asset('images/p4.png')}}" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Flower Bouquet
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $45
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="{{asset('images/p5.png')}}" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Teddy Bear
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $95
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="{{asset('images/p6.png')}}" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Flower Bouquet
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $70
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="{{asset('images/p7.png')}}" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Watch
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $400
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="{{asset('images/p8.png')}}" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $450
-                  </span>
-                </h6>
-              </div>
-              <div class="new">
-                <span>
-                  New
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
+            @endforeach
+        @else
+            <div class="text-center text-info fw-bold ">There are no product exist</div>
+        @endif
+        
       </div>
       <div class="btn-box">
         <a href="{{route('shop')}}">
@@ -323,4 +159,17 @@
   <!-- end contact section -->
 
    
+  @endsection
+
+  @section('js-special')
+      <script>
+        $(document).ready(function(){
+
+          // set the width of the current windwo (desktop , tablet or mobile)
+          var width = window.innerWidth;
+
+          // Set the width in the hidden input field
+          $('.window_width').val(width);
+        })
+      </script>
   @endsection
