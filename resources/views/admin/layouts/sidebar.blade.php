@@ -2,19 +2,17 @@
 <nav id="sidebar">
     <!-- Sidebar Header-->
     @auth
-      <div class="sidebar-header d-flex align-items-center">
-        <div class="avatar">
-          @if (Auth::guard('admin')->user()->profile_picture)
-            <img src="{{asset('storage/'.Auth::guard('admin')->user()->profile_picture)}}" width="50" alt="..." class=" rounded-circle">
-          @else
-            <img src="{{asset('admin/img/profile.jpg')}}" width="50" alt="..." class=" rounded-circle">
-          @endif
+      @if (Auth::guard('admin')->user())
+        <div class="sidebar-header d-flex align-items-center">
+          <div class="avatar">
+              <img src="{{asset('storage/'.Auth::guard('admin')->user()->profile_picture)}}" width="50" alt="..." class=" rounded-circle">
+          </div>
+          <div class="title">
+            <h1 class="h5">{{Auth::guard('admin')->user()->name}}</h1>
+            <p>Admin</p>
+          </div>
         </div>
-        <div class="title">
-          <h1 class="h5">{{Auth::guard('admin')->user()->name}}</h1>
-          <p>Admin</p>
-        </div>
-      </div>
+        @endif
     @endauth
     <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
     <ul class="list-unstyled" id="sidebar-links-icons">

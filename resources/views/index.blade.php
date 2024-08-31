@@ -56,6 +56,12 @@
           Latest Products
         </h2>
       </div>
+      @if (session('success_add_product'))
+          <div class="alert alert-success">{{session('success_add_product')}}</div>
+      @endif
+      @if (session('errorAddProduct'))
+      <div class="alert alert-danger">{{session('errorAddProduct')}}</div>
+  @endif
       <div class="row">
         @if (count($products))
             @foreach ($products as $product)
@@ -80,11 +86,17 @@
                       </span>
                     </div>
 
-                    <form action="{{route('products.show',$product->id)}}" method="POST">
+                    
+                    <div class="d-flex justify-content-between">
+                      <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning text-capitalize">add to cart</a>
+                      <a href="" class="btn btn-danger text-capitalize">buy</a>
+                    </div>
+
+                    <form action="{{route('products.show',$product->id)}}" method="POST" class="mt-3">
                       @csrf
                       @method("GET")
                       <input type="hidden" name="window_width" id="window_width" />
-                      <input type="submit" value="Show More" class="border-0 text-primary">
+                      <input type="submit" value="Show More" class="border-0 p-0 ps-1 text-primary">
                     </form>
                 </div>
               </div>

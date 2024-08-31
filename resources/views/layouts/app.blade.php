@@ -33,6 +33,8 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
     <!-- responsive style -->
     <link href="{{asset('css/responsive.css')}}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{{asset('css/all.min.css')}}">
 </head>
 <body>
     <div id="app">
@@ -48,16 +50,16 @@
             <div class="social_container">
               <div class="social_box">
                 <a href="">
-                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                  <i class="fa-brands fa-facebook" aria-hidden="true"></i>
                 </a>
                 <a href="">
-                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                  <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
                 </a>
                 <a href="">
-                  <i class="fa fa-instagram" aria-hidden="true"></i>
+                  <i class="fa-brands fa-instagram" aria-hidden="true"></i>
                 </a>
                 <a href="">
-                  <i class="fa fa-youtube" aria-hidden="true"></i>
+                  <i class="fa-brands fa-youtube" aria-hidden="true"></i>
                 </a>
               </div>
             </div>

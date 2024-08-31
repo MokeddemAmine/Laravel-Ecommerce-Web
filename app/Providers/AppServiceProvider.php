@@ -6,6 +6,9 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
+use Illuminate\Support\Facades\View;
+use App\Http\Controllers\CartController;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -27,5 +30,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
+
+        View::composer('*', function ($view) {
+            $cartController = new CartController();
+            $cartCount = $cartController->getCartCount();
+            $view->with('cart_count', $cartCount);
+        });
     }
 }

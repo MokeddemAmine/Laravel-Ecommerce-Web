@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +26,19 @@ Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])-
 Route::get('/shop', [App\Http\Controllers\HomeController::class, 'shop'])->name('shop');
 Route::get('/testimonial', [App\Http\Controllers\HomeController::class, 'testimonial'])->name('testimonial');
 Route::get('/why', [App\Http\Controllers\HomeController::class, 'why'])->name('why');
-Route::get('products/{product}',[HomeController::class,'show_product'])->name('products.show');
+
+Route::controller(ProductController::class)->group(function(){
+    Route::get('products/{product}','show')->name('products.show');
+});
+
+Route::controller(CartController::class)->group(function(){
+    Route::get('carts','index')->name('carts.index');
+    Route::post('carts/update','update')->name('carts.update');
+    Route::get('carts/addToCart/{product}','store')->name('carts.store');
+    Route::delete('carts/{cart}','destroy')->name('carts.destroy');
+});
+
+
 
 Route::controller(ProfileController::class)->group(function(){
     Route::get('/user/profile','profilePage')->name('user.profile');

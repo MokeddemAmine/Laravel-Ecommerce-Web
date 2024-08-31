@@ -1,3 +1,4 @@
+
 <!-- header section strats -->
 <header class="header_section mt-3">
     <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -63,10 +64,15 @@
                             </form>
                         </div>
                     </div>
+                    <a href="{{route('carts.index')}}" id="shopping-cart">
+                      <i class="fa fa-shopping-bag" aria-hidden="true" >
+                        @if ($cart_count)
+                          <span class="d-inline-block bg-warning rounded-circle p-1 fw-bold">{{$cart_count}}</span>
+                        @endif
+                      </i>
+                    </a>
             @endguest
-          <a href="">
-            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-          </a>
+          
           <form class="form-inline ">
             <button class="btn nav_search-btn" type="submit">
               <i class="fa fa-search" aria-hidden="true"></i>
