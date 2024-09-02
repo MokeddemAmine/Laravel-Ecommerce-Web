@@ -61,6 +61,7 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
         Route::get('orders/processing/{order}','processOrder')->name('orders.processing');
         Route::get('orders/shipping/{order}','shipOrder')->name('orders.shipping');
         Route::get('orders/delivering/{order}','deliverOrder')->name('orders.delivered');
+        Route::get('orders/print/{order}','print')->name('orders.print');
     });
 
     Route::controller(AdminLoginController::class)->group(function(){

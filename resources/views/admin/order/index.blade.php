@@ -12,32 +12,38 @@
 
         <div class="orders-content m-3 m-md-5">
             @if (count($orders))
-            <table class="table table-dark">
-                <thead>
-                    <tr>
-                        <th>#Num</th>
-                        <th>Customer</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="row my-3">
+                <div class="col-1">#Num</div>
+                <div class="col-3">Customer</div>
+                <div class="col-3">Address</div>
+                <div class="col-2">Phone</div>
+                <div class="col-1">Status</div>
+                <div class="col-2">Action</div>
+            </div>
+            
                     @foreach ($orders as $order)
-                        <tr>
-                            <td>{{$order->id}}</td>
-                            <td>{{$order->user->name}}</td>
-                            <td>{{$order->address}}</td>
-                            <td>{{$order->phone}}</td>
-                            <td>
+                        <div class="row my-1 align-items-center">
+                            <div class="col-md-1">
+                                {{$order->id}}
+                            </div>
+                            <div class="col-md-3">
+                                {{$order->user->name}}
+                            </div>
+                            <div class="col-md-3">
+                                {{$order->address}}
+                            </div>
+                            <div class="col-md-2">
+                                {{$order->phone}}
+                            </div>
+                            <div class="col-md-1">
                                 <span class="@if($order->status == 'pending' || $order->status == 'processing') text-warning @elseif($order->status == 'shipping' || $order->status == 'delivered') text-info @elseif($order->status == 'confirmed') text-success @elseif($order->status == 'canceled') text-danger @endif">{{$order->status}}</span>
-                            </td>
-                            <td><a href="{{route('admin.dashboard.orders.show',$order->id)}}" class="text-capitalize">show</a></td>
-                        </tr>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="{{route('admin.dashboard.orders.show',$order->id)}}" class="text-capitalize btn btn-danger btn-sm">show</a>
+                                <a href="{{route('admin.dashboard.orders.print',$order->id)}}" class="text-capitalize btn btn-secondary btn-sm" target="_blank">print</a>
+                            </div>
+                        </div>
                     @endforeach
-                </tbody>
-            </table>
                 
             @else
                 <div class="alert alert-info m-3 fw-bold">There are no order</div>

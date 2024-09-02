@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -54,6 +55,15 @@ class OrderController extends Controller
             'status'    => 'delivered'
         ]);
         return redirect()->back()->with('successMessage','Order was be delivered');
+    }
+
+    public function print(Order $order){
+        
+        
+        $pdf = Pdf::loadView('admin.order.invoice',compact('order'));
+        
+        return $pdf->stream('order-'.$order->id.'.pdf');
+        return view('admin.order.invoice',compact('order'));
     }
 
     public function create(){
