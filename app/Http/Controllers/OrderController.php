@@ -14,7 +14,46 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('index','show','cancelOrder','processOrder');
+        $this->middleware('auth:admin')->only('index','show','cancelOrder','processOrder');
+    }
+
+    public function index(){
+
+        $orders = Order::orderBy('id', 'desc')->get();
+        return view('admin.order.index',compact('orders'));
+
+    }
+
+    public function show(Order $order){
+        return view('admin.order.show',compact('order'));
+    }
+
+    public function cancelOrder(Order $order){
+        $order->update([
+            'status'    => 'canceled'
+        ]);
+        return redirect()->back()->with('successMessage','Order cancelled with success');
+    }
+
+    public function processOrder(Order $order){
+        $order->update([
+            'status'    => 'processing'
+        ]);
+        return redirect()->back()->with('successMessage','Order was be processed');
+    }
+    public function shipOrder(Order $order){
+        $order->update([
+            'status'    => 'shipping'
+        ]);
+        return redirect()->back()->with('successMessage','Order was be shipped');
+    }
+
+    public function deliverOrder(Order $order){
+        $order->update([
+            'status'    => 'delivered'
+        ]);
+        return redirect()->back()->with('successMessage','Order was be delivered');
     }
 
     public function create(){

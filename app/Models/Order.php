@@ -14,4 +14,12 @@ class Order extends Model
         'phone',
         'status',
     ];
+    
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function details_order(){
+        return $this->hasMany(DetailsOrder::class);
+    }
 }

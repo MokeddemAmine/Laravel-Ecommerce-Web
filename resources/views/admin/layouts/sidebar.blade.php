@@ -35,6 +35,7 @@
                 <li><a href="{{route('admin.dashboard.products.create')}}">Create </a></li>
               </ul>
             </li>
+            <li><a href="{{route('admin.dashboard.orders.index')}}"> <i class="icon-home"></i>Orders </a></li>
           @endguest
             
     </ul>

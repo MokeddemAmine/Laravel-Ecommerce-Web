@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\AdminHomeController;
 use App\Http\Controllers\admin\AdminProductController;
 use App\Http\Controllers\admin\auth\AdminLoginController;
 use App\Http\Controllers\admin\auth\AdminRegisterController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use ParagonIE\Sodium\Core\Curve25519\Ge\P2;
@@ -51,6 +52,15 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
         Route::delete('/products/{product}','destroy')->name('products.destroy');
 
         Route::get('/products/search','search')->name('products.search');
+    });
+
+    Route::controller(OrderController::class)->group(function(){
+        Route::get('orders','index')->name('orders.index');
+        Route::get('orders/{order}','show')->name('orders.show');
+        Route::get('orders/canceled/{order}','cancelOrder')->name('orders.cancel');
+        Route::get('orders/processing/{order}','processOrder')->name('orders.processing');
+        Route::get('orders/shipping/{order}','shipOrder')->name('orders.shipping');
+        Route::get('orders/delivering/{order}','deliverOrder')->name('orders.delivered');
     });
 
     Route::controller(AdminLoginController::class)->group(function(){
