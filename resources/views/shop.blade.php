@@ -8,6 +8,12 @@
 
   <section class="shop_section layout_padding">
     <div class="container">
+      @if (session('success_add_product'))
+          <div class="alert alert-success">{{session('success_add_product')}}</div>
+      @endif
+      @if (session('errorAddProduct'))
+      <div class="alert alert-danger">{{session('errorAddProduct')}}</div>
+      @endif
       <div class="row">
         @if (count($products))
           @foreach ($products as $product)
@@ -24,6 +30,10 @@
                     <h6>
                       <span>${{$product->price}}</span>
                     </h6>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning text-capitalize">add to cart</a>
+                    <a href="" class="btn btn-danger text-capitalize">buy</a>
                   </div>
                 <form action="{{route('products.show',$product->id)}}" method="POST">
                   @csrf

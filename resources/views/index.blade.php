@@ -61,7 +61,7 @@
       @endif
       @if (session('errorAddProduct'))
       <div class="alert alert-danger">{{session('errorAddProduct')}}</div>
-  @endif
+      @endif
       <div class="row">
         @if (count($products))
             @foreach ($products as $product)

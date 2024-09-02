@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\DetailsCart;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use WooCommerce\PayPalCommerce\AdminNotices\Repository\RepositoryInterface;
@@ -83,9 +84,9 @@ class CartController extends Controller
         return 0; 
     }
 
-    public function index(){
+    public function show(User $user){
 
-        $cart = Cart::where('user_id',Auth::user()->id)->first();
+        $cart = Cart::where('user_id',$user->id)->first();
 
         $cart_products = NULL;
 
@@ -102,8 +103,8 @@ class CartController extends Controller
         $cart = DetailsCart::find($request->cart_id);
 
         if($cart){
-            if(intval($request->quantity) <= $cart->product->quantity){
-                if(intval($request->quantity) > 0){
+            if(intval($request->quantity) <= $cart->product->quantity){// verify a valide quantity
+                if(intval($request->quantity) > 0){// verify quantity if positive
                     $cart->update([
                         'quantity'  => intval($request->quantity),
                     ]);
@@ -113,6 +114,7 @@ class CartController extends Controller
                     ]);
                 }
                 
+                // calculate the total price of the whole cart
                 $carts_related = DetailsCart::where('cart_id',$cart->cart_id)->get();
                 $total_price = 0;
                 foreach($carts_related as $carts){
@@ -122,15 +124,8 @@ class CartController extends Controller
                     'status'        => true,
                     'total_price'   => $total_price,
                 ]);
-                // return redirect()->back()->with('successMessage','quantity updated for '.$cart->product->title);
-            }else{
-                return response()->json(['msg' => 'false quantity']);
-                // return redirect()->back()->with('errorMessage','you was enter a quantity indisponible');
             }
-        }
-
-        return Response()->json(['msg'  => 'error']);
-        
+        }     
         
     }
 

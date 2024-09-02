@@ -64,7 +64,7 @@
                             </form>
                         </div>
                     </div>
-                    <a href="{{route('carts.index')}}" id="shopping-cart">
+                    <a href="{{route('carts.show',Auth::user()->id)}}" id="shopping-cart">
                       <i class="fa fa-shopping-bag" aria-hidden="true" >
                         @if ($cart_count)
                           <span class="d-inline-block bg-warning rounded-circle p-1 fw-bold">{{$cart_count}}</span>

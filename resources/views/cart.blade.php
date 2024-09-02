@@ -5,12 +5,12 @@
     <div class="cart-page">
         <h2 class="my-3 text-primary">Cart</h2>
         @if (session('successMessage'))
-            <div class="my-3 alert alert-success fw-bold">{{session('successMessage')}}</div>
+            <div class="my-3 text-success fw-bold">{{session('successMessage')}}</div>
         @endif
         @if (session('errorMessage'))
-            <div class="my-3 alert alert-danger fw-bold">{{session('errorMessage')}}</div>
+            <div class="my-3 text-danger fw-bold">{{session('errorMessage')}}</div>
         @endif
-        @if ($cart_products)
+        @if (count($cart_products))
         <div class="row" id="table-titles" style="display: none">
             <div class="col-md-3 fw-bold text-center">Product</div>
             <div class="col-md-3 fw-bold">Title</div>
@@ -62,6 +62,9 @@
                         @endphp
                     @endforeach
                     <div class="my-3 p-3 text-end fw-bold" ><span class="me-3">Total: </span> $<span id="total-price">{{$total}}</span> </div>
+                    <div class="my-3 text-end">
+                        <a href="{{route('orders.create')}}" class="btn btn-warning btn-sm text-capitalize fw-bold">go to order <i class="fa-solid fa-chevron-right"></i></a>
+                    </div>
         @else
             <div class="text-center my-5 alert alert-info fw-bold">There are no product in your cart</div>
         @endif
@@ -80,16 +83,15 @@
                 $('#table-titles').show();
             }
 
+            // script for change the quantity of each product and return the total price with AJAX
+
             $('.quantity-product').on('change',function(){
                 changeCart(this);
                 
             })
             $('.quantity-product').on('keyup',function(){
-                console.log($(this).attr('max'));
                 changeCart(this);
-                if($(this).val() < 1){
-                    $(this).val(1);
-                }else if($(this).val() > parseInt($(this).attr('max')) ){
+                if($(this).val() > parseInt($(this).attr('max')) ){
                     $(this).val(1)
                 }
             })
@@ -106,7 +108,6 @@
                             quantity:$(that).val(),
                      },
                      success:function(data,status,xhr){
-                        console.log(data)
                         $('#total-price').text(data.total_price)
                      },
                      error:function(xhr,status,err){

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -32,10 +33,15 @@ Route::controller(ProductController::class)->group(function(){
 });
 
 Route::controller(CartController::class)->group(function(){
-    Route::get('carts','index')->name('carts.index');
+    Route::get('carts/{user}','show')->name('carts.show');
     Route::post('carts/update','update')->name('carts.update');
     Route::get('carts/addToCart/{product}','store')->name('carts.store');
     Route::delete('carts/{cart}','destroy')->name('carts.destroy');
+});
+
+Route::controller(OrderController::class)->group(function(){
+    Route::get('orders/create','create')->name('orders.create');
+    Route::post('orders','store')->name('orders.store');
 });
 
 

@@ -8,6 +8,12 @@
 
   <section class="shop_section layout_padding">
     <div class="container">
+                @if (session('success_add_product'))
+                    <div class="alert alert-success">{{session('success_add_product')}}</div>
+                @endif
+                @if (session('errorAddProduct'))
+                <div class="alert alert-danger">{{session('errorAddProduct')}}</div>
+                @endif
               <h2 class="my-3 fw-bold fs-2 text-primary">{{$product->title}}</h2>
               <div class="box rounded">
                 @php
@@ -127,9 +133,9 @@
             <div class="detail-box">
                 <p class="ms-3">{{$product->description}}</p>
             </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-warning">To Cart</button>
-                <buttn class="btn btn-danger ms-3">Buy</buttn>
+            <div class="d-flex justify-content-end gap-2">
+                <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning text-capitalize">add to cart</a>
+                <a href="" class="btn btn-danger text-capitalize">buy</a>
             </div>
         </div>
         @if (count($related_products))
@@ -150,6 +156,10 @@
                                 <span>${{$product->price}}</span>
                               </h6>
                             </div>
+                            <div class="d-flex justify-content-between">
+                                <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning text-capitalize">add to cart</a>
+                                <a href="" class="btn btn-danger text-capitalize">buy</a>
+                              </div>
                             <form action="{{route('products.show',$product->id)}}" method="POST">
                               @csrf
                               @method("GET")
