@@ -4,6 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -17,7 +20,12 @@ class AdminHomeController extends Controller
     
     public function index(){
 
-        return view('admin.index');
+        $clients = User::all()->count();
+        $products = Product::all()->count();
+        $orders = Order::all()->count();
+        $orders_delivered = Order::where('status','delivered')->get()->count();
+
+        return view('admin.index',compact('clients','products','orders','orders_delivered'));
     }
 
     public function profile(){
