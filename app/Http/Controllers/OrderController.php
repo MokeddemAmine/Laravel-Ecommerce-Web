@@ -15,79 +15,39 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        if(Auth::guard('admin')->check()){
-            $this->middleware('auth:admin')->except('create','store','confirmOrder');
-        }else{
-            $this->middleware('auth')->only('index','show','create','store','edit','update','cancelOrder','confirmOrder');
-        }
-        // $this->middleware('auth:web')->except('show','cancelOrder','processOrder');
-        // $this->middleware('auth:admin')->only('index','show','cancelOrder','processOrder');
+        $this->middleware('auth');
     }
 
     public function index(){
 
-        
-        if(Auth::guard('admin')->check()){
-            $orders = Order::orderBy('id', 'desc')->get();
-            return view('admin.order.index',compact('orders'));
-        }else{
-            $orders = Order::where('user_id',Auth::user()->id)->get();
-            return view('order.index',compact('orders'));
-        }
-        
+        $orders = Order::where('user_id',Auth::user()->id)->get();
+        return view('order.index',compact('orders'));
 
     }
 
     public function show(Order $order){
-        if(Auth::guard('admin')->check()){
-            return view('admin.order.show',compact('order'));
+
+        if($order->user_id == Auth::user()->id){
+            return view('order.show',compact('order'));
         }else{
-            if($order->user_id == Auth::user()->id){
-                return view('order.show',compact('order'));
-            }else{
-                return view('index');
-            }
-        }  
+            return view('index');
+        }
+         
     }
 
     public function cancelOrder(Order $order){
-        if(Auth::guard('admin')->check()){
+
+        if($order->user_id == Auth::user()->id){
             $order->update([
                 'status'    => 'canceled'
             ]);
             return redirect()->back()->with('successMessage','Order cancelled with success');
         }else{
-            if($order->user_id == Auth::user()->id){
-                $order->update([
-                    'status'    => 'canceled'
-                ]);
-                return redirect()->back()->with('successMessage','Order cancelled with success');
-            }else{
-                return redirect()->route('orders.index');
-            }
+            return redirect()->route('orders.index');
         }
-        
+          
     }
 
-    public function processOrder(Order $order){
-        $order->update([
-            'status'    => 'processing'
-        ]);
-        return redirect()->back()->with('successMessage','Order was be processed');
-    }
-    public function shipOrder(Order $order){
-        $order->update([
-            'status'    => 'shipping'
-        ]);
-        return redirect()->back()->with('successMessage','Order was be shipped');
-    }
-
-    public function deliverOrder(Order $order){
-        $order->update([
-            'status'    => 'delivered'
-        ]);
-        return redirect()->back()->with('successMessage','Order was be delivered');
-    }
 
     public function confirmOrder(Order $order){
         if($order->user_id == Auth::user()->id){
@@ -102,7 +62,13 @@ class OrderController extends Controller
 
     public function edit(Order $order){
 
-        return view('order.edit',compact('order'));
+        $order_of_current_user = $order->user_id == Auth::user()->id;
+
+        if($order_of_current_user){
+            return view('order.edit',compact('order'));
+        }
+        return redirect()->route('orders.index');
+        
     }
     public function update(Request $request){
 
@@ -137,7 +103,7 @@ class OrderController extends Controller
         $order_of_item = Order::where('id',$item->order_id)->first();
         $user = Auth::user()->id == $order_of_item->user_id;
         if($user){
-            
+
             $item->delete();
             // count if there are any item related with the order
             $count_items_of_order = DetailsOrder::where('order_id',$order_of_item->id)->get()->count();
@@ -151,17 +117,9 @@ class OrderController extends Controller
         }
     }
 
-    public function print(Order $order){
-        
-        
-        $pdf = Pdf::loadView('admin.order.invoice',compact('order'));
-        
-        return $pdf->stream('order-'.$order->id.'.pdf');
-        return view('admin.order.invoice',compact('order'));
-    }
 
     public function create(){
-
+        
         $cart = Cart::where('user_id',Auth::user()->id)->first();
 
         $cart_products = NULL;
@@ -170,7 +128,6 @@ class OrderController extends Controller
             $cart_products = DetailsCart::where('cart_id',$cart->id)->get();
             
         }
-
         return view('order.create',compact('cart_products'));
     }
 

@@ -41,9 +41,9 @@ Route::controller(CartController::class)->group(function(){
 
 Route::controller(OrderController::class)->group(function(){
     Route::get('orders','index')->name('orders.index');
-    Route::get('orders/{order}','show')->name('orders.show');
     Route::get('orders/create','create')->name('orders.create');
     Route::post('orders','store')->name('orders.store');
+    Route::get('orders/{order}','show')->name('orders.show');
     Route::get('orders/{order}/edit','edit')->name('orders.edit');
     Route::post('orders/update','update')->name('orders.update');
     Route::delete('orders/destroy-item/{item}','destroyItem')->name('orders.destroy.item');

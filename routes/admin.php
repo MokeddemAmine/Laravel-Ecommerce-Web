@@ -3,9 +3,9 @@
 use App\Http\Controllers\admin\AdminCategoryController;
 use App\Http\Controllers\admin\AdminHomeController;
 use App\Http\Controllers\admin\AdminProductController;
+use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\admin\auth\AdminLoginController;
 use App\Http\Controllers\admin\auth\AdminRegisterController;
-use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use ParagonIE\Sodium\Core\Curve25519\Ge\P2;
@@ -54,7 +54,7 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
         Route::get('/products/search','search')->name('products.search');
     });
 
-    Route::controller(OrderController::class)->group(function(){
+    Route::controller(AdminOrderController::class)->group(function(){
         Route::get('orders','index')->name('orders.index');
         Route::get('orders/{order}','show')->name('orders.show');
         Route::get('orders/canceled/{order}','cancelOrder')->name('orders.cancel');
