@@ -10,7 +10,7 @@
         @if (session('errorMessage'))
             <div class="my-3 text-danger fw-bold">{{session('errorMessage')}}</div>
         @endif
-        @if (count($cart_products))
+        @if ($cart_products && count($cart_products))
         <div class="row" id="table-titles" style="display: none">
             <div class="col-md-3 fw-bold text-center">Product</div>
             <div class="col-md-3 fw-bold">Title</div>
