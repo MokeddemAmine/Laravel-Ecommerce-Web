@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function show(Request $request,Product $product){
+    public function show(Request $request,$slug){
+        $product = Product::where('slug',$slug)->first();
         $related_products = Product::where('category_id', $product->category_id)
         ->where('id', '!=', $product->id)
         ->latest()

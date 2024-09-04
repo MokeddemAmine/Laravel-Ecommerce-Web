@@ -87,17 +87,17 @@
                     </div>
 
                     
-                    <div class="d-flex justify-content-between">
-                      <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning text-capitalize">add to cart</a>
-                      <a href="" class="btn btn-danger text-capitalize">buy</a>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning btn-sm text-capitalize">add to cart</a>
+                      <form action="{{route('products.show',$product->slug)}}" method="POST">
+                        @csrf
+                        @method("GET")
+                        <input type="hidden" name="window_width" class="window_width" />
+                        <input type="submit" value="Show More" class="border-0 text-primary">
+                      </form>
                     </div>
 
-                    <form action="{{route('products.show',$product->id)}}" method="POST" class="mt-3">
-                      @csrf
-                      @method("GET")
-                      <input type="hidden" name="window_width" id="window_width" />
-                      <input type="submit" value="Show More" class="border-0 p-0 ps-1 text-primary">
-                    </form>
+                    
                 </div>
               </div>
             @endforeach

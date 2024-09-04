@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "anhskohbo/no-captcha": "^3.6",
         "barryvdh/laravel-dompdf": "^2.2",
+        "cviebrock/eloquent-sluggable": "^8.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",

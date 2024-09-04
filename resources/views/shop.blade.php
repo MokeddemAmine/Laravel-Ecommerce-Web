@@ -31,16 +31,15 @@
                       <span>${{$product->price}}</span>
                     </h6>
                   </div>
-                  <div class="d-flex justify-content-between">
+                  <div class="d-flex justify-content-between align-items-center">
                     <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning text-capitalize">add to cart</a>
-                    <a href="" class="btn btn-danger text-capitalize">buy</a>
+                    <form action="{{route('products.show',$product->slug)}}" method="POST">
+                      @csrf
+                      @method("GET")
+                      <input type="hidden" name="window_width" class="window_width" />
+                      <input type="submit" value="Show More" class="border-0 text-primary">
+                    </form>
                   </div>
-                <form action="{{route('products.show',$product->id)}}" method="POST">
-                  @csrf
-                  @method("GET")
-                  <input type="hidden" name="window_width" id="window_width" />
-                  <input type="submit" value="Show More" class="border-0 text-primary">
-                </form>
               </div>
             </div>
           @endforeach

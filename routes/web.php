@@ -29,7 +29,7 @@ Route::get('/testimonial', [App\Http\Controllers\HomeController::class, 'testimo
 Route::get('/why', [App\Http\Controllers\HomeController::class, 'why'])->name('why');
 
 Route::controller(ProductController::class)->group(function(){
-    Route::get('products/{product}','show')->name('products.show');
+    Route::get('products/{slug}','show')->name('products.show');
 });
 
 
