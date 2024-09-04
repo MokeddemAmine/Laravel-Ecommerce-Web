@@ -13,6 +13,7 @@ class Order extends Model
         'address',
         'phone',
         'status',
+        'payment_status',
     ];
     
     public function user(){

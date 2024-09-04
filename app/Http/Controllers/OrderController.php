@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 
+
+use Stripe;
+use Session;
+
 class OrderController extends Controller
 {
     public function __construct()
@@ -139,22 +143,42 @@ class OrderController extends Controller
             'address'           => ['required','string'],
             'code_phone'        => ['required','string','not_in:code'],
             'phone'             => ['required','Numeric'],
-            'pay'               => ['required','string','accepted'],
             'terms_conditions'  => ['required','string','accepted'],
         ]);
 
-        $address    = $request->country.' '.$request->state.' '.$request->address;
-        $phone      = $request->code_phone.$request->phone;
+        
 
-        // get the current cart with all products for ordering
         $cart = Cart::where('user_id',Auth::user()->id)->first();
         $details_cart = DetailsCart::where('cart_id',$cart->id)->get();
 
+        // calculate the total price of the order
+        $price = 0;
+        foreach($details_cart as $d_cart){
+            $price += $d_cart->quantity * $d_cart->product->price;
+        }
+
+        // payment stripe
+
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+    
+        Stripe\Charge::create ([
+                "amount" => $price * 100,
+                "currency" => "usd",
+                "source" => $request->stripeToken,
+                "description" => "Test payment from itsolutionstuff.com." 
+        ]);
+      
+
+        $address    = $request->country.' '.$request->state.' '.$request->address;
+        $phone      = $request->code_phone.$request->phone;
+        
+
         // create the new order
         $order = Order::create([
-             'user_id'  => Auth::user()->id,
-             'address'  => $address,
-             'phone'    => $phone,
+             'user_id'          => Auth::user()->id,
+             'address'          => $address,
+             'phone'            => $phone,
+             'payment_status'   => 'stripe payment',
         ]);
         // create the new details order
         foreach($details_cart as $d_cart){

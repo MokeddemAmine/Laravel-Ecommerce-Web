@@ -32,7 +32,6 @@ Route::controller(ProductController::class)->group(function(){
     Route::get('products/{product}','show')->name('products.show');
 });
 
-Route::middleware('verified')->group(function(){
 
     Route::controller(CartController::class)->group(function(){
         Route::get('carts/{user}','show')->name('carts.show');
@@ -58,8 +57,3 @@ Route::middleware('verified')->group(function(){
     Route::controller(ProfileController::class)->group(function(){
         Route::get('/user/profile','profilePage')->name('user.profile');
     });
-
-});
-
-
-
