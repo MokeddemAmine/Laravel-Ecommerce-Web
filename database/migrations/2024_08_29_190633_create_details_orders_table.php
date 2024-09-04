@@ -24,6 +24,7 @@ class CreateDetailsOrdersTable extends Migration
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

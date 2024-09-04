@@ -28,12 +28,18 @@
                 @endphp
                 @foreach ($order->details_order as $item)
                 @php
-                    $image = json_decode($item->product->images)[0];
+                    if($item->product_id)
+                        $image = json_decode($item->product->images)[0];
                 @endphp
                 <div class="row align-items-center text-md-center my-3 border-top pt-2">
                     <div class="col-md">{{$item->id}}</div>
                     <div class="col-md">
-                        <img src="{{asset('storage/'.$image)}}" alt="{{$item->product_title}} image" width="100" />
+                        @if ($item->product_id)
+                            <img src="{{asset('storage/'.$image)}}" alt="{{$item->product_title}} image" width="100" />
+                        @else
+                            <div class="my-2 text-danger text-capitalize">product deleted</div>
+                        @endif
+                        
                     </div>
                     <div class="col-md">{{$item->product_title}}</div>
                     <div class="col-md">{{$item->quantity}}</div>
