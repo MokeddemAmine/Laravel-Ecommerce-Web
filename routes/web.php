@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -44,12 +45,20 @@ Route::controller(ProductController::class)->group(function(){
         Route::get('orders','index')->name('orders.index');
         Route::get('orders/create','create')->name('orders.create');
         Route::post('orders','store')->name('orders.store');
+        Route::get('checkout/{address}','checkout')->name('checkout.index');
+        Route::post('checkout','checkout_store')->name('checkout.store');
         Route::get('orders/{order}','show')->name('orders.show');
         Route::get('orders/{order}/edit','edit')->name('orders.edit');
         Route::post('orders/update','update')->name('orders.update');
         Route::delete('orders/destroy-item/{item}','destroyItem')->name('orders.destroy.item');
         Route::get('orders/cancelOrder/{order}','cancelOrder')->name('orders.destroy');
         Route::get('orders/confirmOrder/{order}','confirmOrder')->name('orders.confirm');
+    });
+
+    Route::controller(PayPalController::class)->group(function(){
+        Route::get('paypal','payment')->name('paypal.payment');
+        Route::get('paypal/success','success')->name('paypal.success');
+        Route::get('paypal/cancel','cancel')->name('paypal.cancel');
     });
 
 

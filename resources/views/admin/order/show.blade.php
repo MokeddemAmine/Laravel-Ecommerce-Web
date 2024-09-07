@@ -44,6 +44,8 @@
                                         $image = json_decode($unit_order->product->images)[0];
                                     @endphp
                                     <img src="{{asset('storage/'.$image)}}" alt="{{$unit_order->product_title}} image" width="50" />
+                                @else
+                                    <div class="my-2 text-danger text-capitalize">product deleted</div>
                                 @endif
                             </div>
                             <div class="col">{{$unit_order->product_title}}</div>

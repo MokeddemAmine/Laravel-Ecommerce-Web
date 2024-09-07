@@ -43,4 +43,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function ship_address(){
+        return $this->hasMany(Address::class,'user_id','id');
+    }
 }

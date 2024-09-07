@@ -16,50 +16,85 @@
                 <div class="col-md-8">
                     <form role="form" 
                     action="{{ route('orders.store') }}" 
-                    method="post" 
-                    class="require-validation"
-                    data-cc-on-file="false"
-                    data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
-                    id="payment-form">
+                    method="post" >
                         @csrf
-                        <div class="row align-items center mb-5">
-                            <label for="name" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">name</label>
-                            <p class="col-md-8">{{Auth::user()->name}}</p>
-                        </div>
-                        <div class="form-group mb-5 row align-items-center">
-                            <label for="country" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">country</label>
-                            <div class="col-md-8">
-                                <select name="country" id="country" class="form-select">
-                                    <option hidden>Chose your country</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row align-items-center mb-5">
-                            <label for="state" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">state</label>
-                            <div class="col-md-8">
-                                <select name="state" id="state" class="form-select">
-                                    <option hidden>Chose your state</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row align-items-center mb-5">
-                            <label for="address" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">address</label>
-                            <div class="col-md-8">
-                                <input type="text" name="address" value="{{old('address')}}" id="address" placeholder="Enter your address" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group row align-items-center mb-5">
-                            <label for="phone" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">phone</label>
-                            <div class="col-md-8">
-                                <div class="input-group mb-3">
-                                    <div class="col-3">
-                                        <select name="code_phone" id="code_phone" class="form-select">
-                                            <option hidden>code</option>
-                                        </select>
+                        @if (count($addresses))
+                            @foreach ($addresses as $address)
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        
+                                            <div class="input-group">
+                                                <div class="input-group-text me-3">
+                                                <input class="form-check-input mt-0" type="radio" name="address_ship" value="{{$address->id}}" aria-label="Radio button for following text input">
+                                                </div>
+                                            </div>
+                                            <div class="mt-3 ms-3">
+                                                <p>{{$address->address}}</p>
+                                                <p>{{$address->phone}}</p>
+                                            </div>
+
                                     </div>
-                                    
-                                    <input type="text" name="phone" value="{{old('phone')}}" class="form-control" id="phone" aria-label="Text input with dropdown button" placeholder="Your phone number">
                                 </div>
+                            @endforeach
+                        
+                        @endif
+                        
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                
+                                    @if (count($addresses))
+                                        
+                                        <div class="input-group align-items-center">
+                                            <div class="input-group-text me-3">
+                                            <input class="form-check-input mt-0" type="radio" name="address_ship" value="new_address" aria-label="Radio button for following text input" checked>
+                                            </div>
+                                            <h6 class="text-capitalize text-info m-0">new address</h6>
+                                        </div>
+
+                                    @endif
+                                    <div class="mt-3 ms-3">
+                                        <div class="row align-items center mb-5">
+                                            <label for="name" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">name</label>
+                                            <p class="col-md-8">{{Auth::user()->name}}</p>
+                                        </div>
+                                        <div class="form-group mb-5 row align-items-center">
+                                            <label for="country" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">country</label>
+                                            <div class="col-md-8">
+                                                <select name="country" id="country" class="form-select">
+                                                    <option hidden>Chose your country</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row align-items-center mb-5">
+                                            <label for="state" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">state</label>
+                                            <div class="col-md-8">
+                                                <select name="state" id="state" class="form-select">
+                                                    <option hidden>Chose your state</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row align-items-center mb-5">
+                                            <label for="address" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">address</label>
+                                            <div class="col-md-8">
+                                                <input type="text" name="address" value="{{old('address')}}" id="address" placeholder="Enter your address" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row align-items-center mb-5">
+                                            <label for="phone" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">phone</label>
+                                            <div class="col-md-8">
+                                                <div class="input-group mb-3">
+                                                    <div class="col-3">
+                                                        <select name="code_phone" id="code_phone" class="form-select">
+                                                            <option hidden>code</option>
+                                                        </select>
+                                                    </div>
+                                                    
+                                                    <input type="text" name="phone" value="{{old('phone')}}" class="form-control" id="phone" aria-label="Text input with dropdown button" placeholder="Your phone number">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                             </div>
                         </div>
                         
@@ -68,55 +103,8 @@
                             <label class="form-check-label" for="flexSwitchCheckDefault">use Terms and conditions</label>
                         </div>
                         
-                        <div class="form-group row mb-5">
-                            <label for="payment-form" class="col-xl-4 mb-3 mb-md-0 text-capitalize fw-bold">Payment</label>
-                            <div class="col-xl-8">
-
-                            <div id="payment-form" class=" border p-2 rounded border-secondary">
-                                <div class='form-row row'>
-                                    <div class='col-xs-12 form-group required'>
-                                        <label class='control-label'>Name on Card</label> 
-                                        <input class='form-control' size='4' type='text'>
-                                    </div>
-                                </div>
-            
-                                <div class='form-row row'>
-                                    <div class='col-xs-12 form-group required'>
-                                        <label class='control-label'>Card Number</label> <input
-                                            autocomplete='off' class='form-control card-number' size='20'
-                                            type='text'>
-                                    </div>
-                                </div>
-            
-                                <div class='form-row row'>
-                                    <div class='col-xs-12 col-md-4 form-group cvc required'>
-                                        <label class='control-label'>CVC</label> <input autocomplete='off'
-                                            class='form-control card-cvc' placeholder='ex. 311' size='4'
-                                            type='text'>
-                                    </div>
-                                    <div class='col-xs-12 col-md-4 form-group expiration required'>
-                                        <label class='control-label'>Expiration Month</label> <input
-                                            class='form-control card-expiry-month' placeholder='MM' size='2'
-                                            type='text'>
-                                    </div>
-                                    <div class='col-xs-12 col-md-4 form-group expiration required'>
-                                        <label class='control-label'>Expiration Year</label> <input
-                                            class='form-control card-expiry-year' placeholder='YYYY' size='4'
-                                            type='text'>
-                                    </div>
-                                </div>
-            
-                                <div class='form-row row my-3'>
-                                    <div class='col-md-12 error form-group hide'>
-                                        <div class='alert-danger alert'>Please correct the errors and try
-                                            again.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
                         <div class="d-grid gap-2">
-                            <input type="submit" value="Order" class="btn btn-warning">
+                            <button type="submit" class="btn btn-warning">To Checkout <i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                     </form>   
                 
@@ -303,73 +291,5 @@
                 }
             });
         })
-    </script>
-    {{-- script for stripe payment --}}
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    
-    <script type="text/javascript">
-      
-        /*------------------------------------------
-        --------------------------------------------
-        Stripe Payment Code
-        --------------------------------------------
-        --------------------------------------------*/
-        
-        var $form = $(".require-validation");
-        console.log($form.find('div.error'));
-        $('form.require-validation').bind('submit', function(e) {
-            var $form = $(".require-validation"),
-            inputSelector = ['input[type=email]', 'input[type=password]',
-                             'input[type=text]', 'input[type=file]',
-                             'textarea'].join(', '),
-            $inputs = $form.find('.required').find(inputSelector),
-            $errorMessage = $form.find('div.error'),
-            valid = true;
-            $errorMessage.addClass('hide');
-            
-        
-            $('.has-error').removeClass('has-error');
-            $inputs.each(function(i, el) {
-              var $input = $(el);
-              if ($input.val() === '') {
-                $input.parent().addClass('has-error');
-                $errorMessage.removeClass('hide');
-                e.preventDefault();
-              }
-            });
-         
-            if (!$form.data('cc-on-file')) {
-              e.preventDefault();
-              Stripe.setPublishableKey($form.data('stripe-publishable-key'));
-              Stripe.createToken({
-                number: $('.card-number').val(),
-                cvc: $('.card-cvc').val(),
-                exp_month: $('.card-expiry-month').val(),
-                exp_year: $('.card-expiry-year').val()
-              }, stripeResponseHandler);
-            }
-        
-        });
-          
-        /*------------------------------------------
-        --------------------------------------------
-        Stripe Response Handler
-        --------------------------------------------
-        --------------------------------------------*/
-        function stripeResponseHandler(status, response) {
-            if (response.error) {
-                $('.error')
-                    .removeClass('hide')
-                    .find('.alert')
-                    .text(response.error.message);
-            } else {
-                /* token contains id, last4, and card type */
-                var token = response['id'];
-                     
-                $form.find('input[type=text]').empty();
-                $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                $form.get(0).submit();
-            }
-        }
     </script>
 @endsection

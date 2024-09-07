@@ -15,6 +15,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "srmklive/paypal": "~1.0",
         "stripe/stripe-php": "^15.8"
     },
     "require-dev": {
