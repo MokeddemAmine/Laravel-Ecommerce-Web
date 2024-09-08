@@ -88,7 +88,12 @@
 
                     
                     <div class="d-flex justify-content-between align-items-center">
-                      <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning btn-sm text-capitalize">add to cart</a>
+                      @if ($product->quantity)
+                        <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning btn-sm text-capitalize">add to cart</a>
+                      @else
+                        <span class="text-danger text-capitalize">indisponible</span>
+                      @endif
+                      
                       <form action="{{route('products.show',$product->slug)}}" method="POST">
                         @csrf
                         @method("GET")

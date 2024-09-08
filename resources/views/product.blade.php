@@ -135,8 +135,11 @@
                 <p class="ms-3">{{$product->description}}</p>
             </div>
             <div class="d-flex justify-content-end gap-2">
-                <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning text-capitalize">add to cart</a>
-                <a href="" class="btn btn-danger text-capitalize">buy</a>
+                @if ($product->quantity)
+                    <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning btn-sm text-capitalize">add to cart</a>
+                @else
+                    <span class="text-danger text-capitalize">indisponible</span>
+                @endif
             </div>
         </div>
         @if (count($related_products))

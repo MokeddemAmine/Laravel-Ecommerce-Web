@@ -23,14 +23,18 @@ class CartController extends Controller
     public function store(Product $product){
 
         // verify if there are carts exist for the current user
-
-        $cart_exist = Cart::where('user_id',Auth::user()->id)->first();
+        if($product->quantity){
+            $cart_exist = Cart::where('user_id',Auth::user()->id)->first();
         
-        if(!$cart_exist){
-            return $this->create_new_cart($product);
+            if(!$cart_exist){
+                return $this->create_new_cart($product);
+            }else{
+                return $this->create_new_product($product,$cart_exist->id);
+            }
         }else{
-            return $this->create_new_product($product,$cart_exist->id);
+            return redirect()->back()->with('errorMessage','indisponible product');
         }
+        
         
     }
 
