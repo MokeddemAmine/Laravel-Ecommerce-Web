@@ -55,9 +55,6 @@
                 <div class="text-end">
                     @if ($order->status == 'pending' || $order->status == 'processing')
                         <span class="text-warning">The order is in pending or processing</span>
-                        @if ($order->status == 'pending')
-                            <a href="{{route('orders.edit',$order->id)}}" class="btn btn-warning btn-sm mx-2">Edit Order</a>
-                        @endif
                         <a href="{{route('orders.destroy',$order->id)}}" class="btn btn-danger btn-sm text-capitalize delete-order">cancel Order</a>
                     @elseif($order->status == 'delivered')
                         <span class="text-info">The order was delivered</span>
@@ -88,7 +85,7 @@
                 e.preventDefault();
                 swal.fire({
                     title:'Are You Sure want to delete this',
-                    text:'this delete will be parmanent',
+                    text:'the cancel can cost you up to 10% of your money. because of service of transform the money in banks.',
                     icon:'warning',
                     showDenyButton: true,
                     confirmButtonText: "Delete",

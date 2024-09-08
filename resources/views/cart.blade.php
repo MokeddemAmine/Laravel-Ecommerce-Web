@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="cart-page">
-        <h2 class="my-3 text-primary">Cart</h2>
+        <h2 class="my-3 text-primary text-capitalize">shoppint cart</h2>
         @if (session('successMessage'))
             <div class="my-3 text-success fw-bold">{{session('successMessage')}}</div>
         @endif

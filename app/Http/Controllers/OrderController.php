@@ -7,14 +7,9 @@ use App\Models\Cart;
 use App\Models\DetailsCart;
 use App\Models\DetailsOrder;
 use App\Models\Order;
-use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade\Pdf;
-
-
-use Stripe;
-use Session;
 
 class OrderController extends Controller
 {
@@ -46,6 +41,15 @@ class OrderController extends Controller
             $order->update([
                 'status'    => 'canceled'
             ]);
+
+            // edit the quantity of each product edit: 
+            $details_order = DetailsOrder::where('order_id',$order->id)->get();
+            foreach($details_order as $d_order){
+                $product = Product::find($d_order->product_id);
+                $product->update([
+                    'quantity'  => ($product->quantity + $d_order->quantity),
+                ]);
+            }
             return redirect()->back()->with('successMessage','Order cancelled with success');
         }else{
             return redirect()->route('orders.index');
@@ -65,45 +69,7 @@ class OrderController extends Controller
         }
     }
 
-    public function edit(Order $order){
 
-        $order_of_current_user = $order->user_id == Auth::user()->id;
-
-        if($order_of_current_user){
-            return view('order.edit',compact('order'));
-        }
-        return redirect()->route('orders.index');
-        
-    }
-    public function update(Request $request){
-
-        
-        $item = DetailsOrder::find($request->item_id);
-
-        if(intval($request->quantity) <= $item->product->quantity){
-            if(intval($request->quantity) > 0){// verify quantity if positive
-                $item->update([
-                    'quantity'  => intval($request->quantity),
-                ]);
-            }else{
-                $item->update([
-                    'quantity'  => 1,
-                ]);
-            }
-            
-            // calculate the total price of the whole order
-            $orders_related = DetailsOrder::where('order_id',$item->order_id)->get();
-            $total_price = 0;
-            foreach($orders_related as $orders){
-                $total_price += $orders->quantity * $orders->product->price;
-            }
-            return response()->json([
-                'status'        => true,
-                'total_price'   => $total_price,
-            ]);
-        }
-
-    }
     public function destroyItem(DetailsOrder $item){
         $order_of_item = Order::where('id',$item->order_id)->first();
         $user = Auth::user()->id == $order_of_item->user_id;
@@ -173,75 +139,6 @@ class OrderController extends Controller
 
         return redirect('checkout/'.$address_ship);
 
-    }
-
-    public function checkout($address_ship){
-
-        $address = Address::find($address_ship);
-
-        $cart_products = DetailsCart::where('cart_id',Cart::where('user_id',Auth::user()->id)->first()->id)->get();
-        
-        return view('checkout.index',compact('cart_products','address'));
-    }
-
-    public function checkout_store(Request $request){
-
-        
-        $request->validate([
-            'payment'   => ['required','string'],
-            'address'   => ['required','numeric','exists:addresses,id'],
-        ]);
-
-
-        
-
-        
-
-        if($request->payment == 'paypal'){
-
-            return redirect()->route('paypal.payment');
-
-        }elseif($request->payment == 'stripe'){
-            $cart = Cart::where('user_id',Auth::user()->id)->first();
-            $details_cart = DetailsCart::where('cart_id',$cart->id)->get();
-            //   calculate the total price of the order
-            $price = 0;
-            foreach($details_cart as $d_cart){
-                $price += $d_cart->quantity * $d_cart->product->price;
-            }
-            // pay to our stripe account
-            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-    
-            Stripe\Charge::create ([
-                    "amount" => $price * 100,
-                    "currency" => "usd",
-                    "source" => $request->stripeToken,
-                    "description" => "Test payment" 
-            ]);
-
-            // create the new order 
-            $order = Order::create([
-                     'user_id'          => Auth::user()->id,
-                     'ship_address'     => $request->address,
-                     'payment_status'   => 'stripe',
-                ]);
-            // create the new details order
-            foreach($details_cart as $d_cart){
-                DetailsOrder::create([
-                    'order_id'      => $order->id,
-                    'product_id'    => $d_cart->product_id,
-                    'product_title' => $d_cart->product->title,
-                    'quantity'      => $d_cart->quantity,
-                    'price'         => $d_cart->product->price, 
-                ]);
-                // delete the current details_cart 
-                $d_cart->delete();
-            }
-            return redirect()->route('orders.index')->with('successMessage','Your Order was been successfull with stripe payment');
-        }else{
-            return redirect()->back()->with('errorMessage','something was wrong');
-        }
-        
     }
     
 }

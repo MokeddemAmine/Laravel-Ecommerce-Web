@@ -104,7 +104,7 @@
                         </div>
                         
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-warning">To Checkout <i class="fa-solid fa-chevron-right"></i></button>
+                            <button type="submit" class="btn btn-warning">Proceed to Checkout <i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                     </form>   
                 

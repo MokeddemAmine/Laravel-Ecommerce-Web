@@ -68,7 +68,7 @@
                 e.preventDefault();
                 swal.fire({
                     title:'Are You Sure want to delete this',
-                    text:'this delete will be parmanent',
+                    text:'the cancel can cost you up to 10% of your money. because of service of transform the money in banks.',
                     icon:'warning',
                     showDenyButton: true,
                     confirmButtonText: "Delete",
