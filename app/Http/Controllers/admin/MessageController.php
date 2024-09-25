@@ -24,4 +24,13 @@ class MessageController extends Controller
         $message->delete();
         return redirect()->route('admin.dashboard.messages.index')->with('successMessage','Message deleted with success');
     }
+
+    public function unread_messages(){
+        $unread_messages = Message::where('read',0)->orderBy('id','desc')->take(10)->get();
+
+        return response()->json([
+            'status'    => true,
+            'messages'  => $unread_messages,
+        ]);
+    }
 }

@@ -78,6 +78,50 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script src="{{asset('admin/js/main.js')}}"></script>
+  <script>
+    // get message
+    $(document).ready(function(){
+        setInterval(() => {
+            get_unread_messages()
+        }, 3000);
+
+        function get_unread_messages(){
+            $.ajax({
+                method:'POST',
+                url:"{{route('admin.dashboard.messages.unread_messages')}}",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                },
+                success:function(data){
+                    if(data.messages.length){
+                        $('.messages-toggle').html('<i class="icon-email"></i>');
+                        $('.messages-toggle').append('<span class="badge dashbg-1">'+data.messages.length+'</span>');
+                        $('.messages').html('');
+                        data.messages.forEach(function(msg){
+                            let message =  msg.message.substring(0, 30);
+                            message +='...';
+                            $('.messages').append(`
+                                        <a href="/admin/dashboard/messages/${msg.id}" class="p-0 m-0 d-block">
+                                            <div class="p-1 m-1 bg-secondary text-white rounded">
+                                                <h6 class="text-capitalize mb-1">${msg.name}</h6>
+                                                <p class="mb-0">${message}</p>
+                                            </div>
+                                        </a>
+                            `)
+                        })
+                    }else{
+                        $('.messages').html('<div class="p-1">No Message</div>');
+                    }
+                },
+                error:function(xhr,status,err){
+                    console.log(err);
+                }
+            })
+        }
+        get_unread_messages();
+        
+    })
+  </script>
   
   @yield('js-special')
 

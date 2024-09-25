@@ -534,9 +534,6 @@ nav.navbar .dropdown-menu {
   right: 0;
 }
 
-nav.navbar .messages a {
-  padding: 15px !important;
-}
 
 nav.navbar .dropdown-item {
   padding: 1rem !important;
@@ -1839,10 +1836,6 @@ input[type='submit'] {
   display: block;
 }
 
-.input-group .dropdown-menu a:hover {
-  color: #DB6574;
-  background: none !important;
-}
 
 form label {
   font-size: .9rem;

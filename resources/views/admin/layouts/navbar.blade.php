@@ -32,30 +32,12 @@
               <div class="list-inline-item"><a href="#" class="search-open nav-link"><i class="icon-magnifying-glass-browser"></i></a></div>
             </li>
             <li class="nav-item">
-              <div class="list-inline-item dropdown"><a id="navbarDropdownMenuLink1" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link messages-toggle"><i class="icon-email"></i><span class="badge dashbg-1">5</span></a>
+              <div class="list-inline-item dropdown"><a id="navbarDropdownMenuLink1" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link messages-toggle"><i class="icon-email"></i></a>
                 <div aria-labelledby="navbarDropdownMenuLink1" class="dropdown-menu messages">
-                  Message content
+                  
                 </div>
               </div>
             </li>
-            <!-- Tasks-->
-            <li class="nav-item">
-              <div class="list-inline-item dropdown"><a id="navbarDropdownMenuLink2" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link tasks-toggle"><i class="icon-new-file"></i><span class="badge dashbg-3">9</span></a>
-                <div aria-labelledby="navbarDropdownMenuLink2" class="dropdown-menu tasks-list">
-                 badge
-                </div>
-              </div>
-            </li>
-            <!-- Tasks end-->
-            <!-- Megamenu-->
-            <li class="nav-item">
-              <div class="list-inline-item dropdown menu-large"><a href="#" data-bs-toggle="dropdown" class="nav-link">Mega <i class="fa fa-ellipsis-v"></i></a>
-                <div class="dropdown-menu megamenu">
-                  Mega content
-                </div>
-              </div>
-            </li>
-            <!-- Megamenu end     -->
             <!-- Languages dropdown    -->
             <li class="nav-item">
               <div class="list-inline-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="{{asset('admin/img/flag/GB.png')}}" width="35" alt="English"><span class="d-none d-sm-inline-block">English</span></a>

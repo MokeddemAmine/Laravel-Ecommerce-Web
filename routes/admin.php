@@ -77,6 +77,7 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
         Route::get('/messages','index')->name('messages.index');
         Route::get('/messages/{message}','show')->name('messages.show');
         Route::delete('/messages/{message}','destroy')->name('messages.destroy');
+        Route::post('/unread_messages','unread_messages')->name('messages.unread_messages');
     });
 
     Route::controller(AdminLoginController::class)->group(function(){
