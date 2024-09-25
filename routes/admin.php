@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\AdminProductController;
 use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\admin\auth\AdminLoginController;
 use App\Http\Controllers\admin\auth\AdminRegisterController;
+use App\Http\Controllers\admin\MessageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use ParagonIE\Sodium\Core\Curve25519\Ge\P2;
@@ -70,6 +71,12 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
         Route::get('orders/shipping/{order}','shipOrder')->name('orders.shipping');
         Route::get('orders/delivering/{order}','deliverOrder')->name('orders.delivered');
         Route::get('orders/print/{order}','print')->name('orders.print');
+    });
+
+    Route::controller(MessageController::class)->group(function(){
+        Route::get('/messages','index')->name('messages.index');
+        Route::get('/messages/{message}','show')->name('messages.show');
+        Route::delete('/messages/{message}','destroy')->name('messages.destroy');
     });
 
     Route::controller(AdminLoginController::class)->group(function(){

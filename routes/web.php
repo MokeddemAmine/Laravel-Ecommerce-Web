@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\AttributesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProductController;
@@ -65,8 +65,12 @@ Route::controller(ProductController::class)->group(function(){
         Route::get('paypal/cancel','cancel')->name('paypal.cancel');
     });
 
-
-
     Route::controller(ProfileController::class)->group(function(){
         Route::get('/user/profile','profilePage')->name('user.profile');
+    });
+
+    Route::controller(MessageController::class)->group(function(){
+        Route::get('/messages','index')->name('messages');
+        Route::post('/messages','store')->name('messages.store');
+        Route::delete('/messages/{message}','destroy')->name('messages.destroy');
     });

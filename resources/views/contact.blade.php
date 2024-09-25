@@ -25,25 +25,47 @@
           </div>
         </div>
         <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">
+         
+          <form action="{{route('messages.store')}}" method="POST" class="mb-3">
+            @csrf
             <div>
-              <input type="text" placeholder="Name" />
+              <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name" />
             </div>
+            @if ($errors->has('name'))
+                <strong class="my-2 text-danger">{{$errors->first('name')}}</strong>
+            @endif
             <div>
-              <input type="email" placeholder="Email" />
+              <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" />
             </div>
+            @if ($errors->has('email'))
+              <strong class="my-2 text-danger">{{$errors->first('email')}}</strong>
+          @endif
             <div>
-              <input type="text" placeholder="Phone" />
+              <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="Phone" />
             </div>
+            @if ($errors->has('phone'))
+                <strong class="my-2 text-danger">{{$errors->first('phone')}}</strong>
+            @endif
             <div>
-              <input type="text" class="message-box" placeholder="Message" />
+              <input type="text" name="subject" class="form-control @error('subject') is-invalid @enderror" placeholder="Subject" />
             </div>
-            <div class="d-flex ">
-              <button>
-                SEND
-              </button>
+            @if ($errors->has('subject'))
+                <strong class="my-2 text-danger">{{$errors->first('subject')}}</strong>
+            @endif
+            <div>
+              <textarea name="message" id="message" rows="5" class="form-control @error('message') is-invalid @enderror" placeholder="Message"></textarea>
             </div>
+            @if ($errors->has('message'))
+                <strong class="my-2 text-danger">{{$errors->first('message')}}</strong>
+            @endif
+            <div class="d-grid gap-2 my-3">
+              <input type="submit" value="send" class="btn btn-warning text-uppercase">
+            </div>
+            @if (session('successMessage'))
+                <strong class="text-success ms-3 d-inline-block">{{session('successMessage')}}</strong>
+            @endif
           </form>
+         
         </div>
       </div>
     </div>

@@ -42,6 +42,7 @@
               </ul>
             </li>
             <li><a href="{{route('admin.dashboard.orders.index')}}"> <i class="icon-home"></i>Orders </a></li>
+            <li><a href="{{route('admin.dashboard.messages.index')}}"> <i class="fa-solid fa-envelope"></i>Messages </a></li>
           @endguest
             
     </ul>
