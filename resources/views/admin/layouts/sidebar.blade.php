@@ -35,6 +35,12 @@
                 <li><a href="{{route('admin.dashboard.products.create')}}">Create </a></li>
               </ul>
             </li>
+            <li><a href="#attributesDropdown" aria-expanded="false" data-bs-toggle="collapse"> <i class="icon-windows"></i>Attributes </a>
+              <ul id="attributesDropdown" class="collapse list-unstyled ">
+                <li><a href="{{route('admin.dashboard.attributes.index')}}">Show All </a></li>
+                <li><a href="{{route('admin.dashboard.attributes.create')}}">Create </a></li>
+              </ul>
+            </li>
             <li><a href="{{route('admin.dashboard.orders.index')}}"> <i class="icon-home"></i>Orders </a></li>
           @endguest
             

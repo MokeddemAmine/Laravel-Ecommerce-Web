@@ -12,6 +12,7 @@ class DetailsOrder extends Model
         'order_id',
         'product_id',
         'product_title',
+        'attribute',
         'quantity',
         'price',
     ];

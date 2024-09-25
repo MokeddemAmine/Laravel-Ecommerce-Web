@@ -16,13 +16,13 @@
             <div class="my-3 alert alert-danger fw-bold">{{session('errorMessage')}}</div>
         @endif
 
-            <row class="row fw-bold text-center mt-5 mb-3" id="order-header-table" style="display: none">
+            <div class="row fw-bold text-center mt-5 mb-3" id="order-header-table" style="display: none">
                 <div class="col">#N</div>
                 <div class="col">Image</div>
                 <div class="col">Title</div>
                 <div class="col">Quantity</div>
                 <div class="col">Unit Price</div>
-            </row>
+            </div>
                 @php
                     $total = 0;
                 @endphp
@@ -41,7 +41,21 @@
                         @endif
                         
                     </div>
-                    <div class="col-md">{{$item->product_title}}</div>
+                    <div class="col-md">
+                        {{$item->product_title}}
+                        <div>
+                            @if ($item->attribute)
+                                @php
+                                    $attributes = json_decode($item->attribute);
+                                @endphp
+                                @foreach ($attributes as $attribute)
+                                    <span class="fw-bold text-capitalize me-3">{{$attribute}}</span>
+                                @endforeach
+                                
+                            @endif
+                        </div>
+                    
+                    </div>
                     <div class="col-md">{{$item->quantity}}</div>
                     <div class="col-md text-danger">${{$item->price}}</div>
                 </div>

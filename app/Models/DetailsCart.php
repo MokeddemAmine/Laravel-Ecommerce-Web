@@ -11,6 +11,7 @@ class DetailsCart extends Model
     protected $fillable = [
         'cart_id',
         'product_id',
+        'attribute',
         'quantity',
     ];
     

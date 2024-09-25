@@ -4,6 +4,7 @@
 <div class="container">
     <div class="order-page">
         <h2 class="text-primary my-3">Checkout</h2>
+        
         @if (session('successMessage'))
             <div class="my-3 alert alert-success fw-bold">{{session('successMessage')}}</div>
         @endif
@@ -38,6 +39,16 @@
                         <div class="col-7 ">
                             <div class="row">
                                 <div class="col-12 text-primary fw-bold">{{$cart->product->title}}</div>
+                                @if ($cart->attribute)
+                                        @php
+                                            $attribute = json_decode($cart->attribute);
+                                        @endphp
+                                        <div class="col-12 text-dark text-capitalize ">
+                                            @foreach ($attribute as $attr)
+                                                {{$attr}} 
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 <div class="col-12 text-danger fw-bold">${{$cart->product->price}}</div>
                                 <div class="col-12">
                                     * {{$cart->quantity}} = ${{$cart->product->price * $cart->quantity}}

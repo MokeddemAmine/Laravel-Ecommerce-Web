@@ -16,8 +16,8 @@ class EditOrdersTable extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->dropColumn('address');
             $table->dropColumn('phone');
-            $table->unsignedBigInteger('ship_address')->after('user_id')->nullable();
-            $table->foreign('ship_address')->references('id')->on('addresses')->onDelete('set null');
+            $table->unsignedBigInteger('address_id')->after('user_id')->nullable();
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null');
         });
     }
 

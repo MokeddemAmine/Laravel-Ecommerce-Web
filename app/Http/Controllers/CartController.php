@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attribute as ModelsAttribute;
 use App\Models\Cart;
 use App\Models\DetailsCart;
 use App\Models\Order;
@@ -20,25 +21,40 @@ class CartController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Product $product){
-
+    public function store(Request $request,Product $product){
+        
         // verify if there are carts exist for the current user
         if($product->quantity){
+            $attributes = [];
+            if($product->attributes){
+                // get the existing attributes of the current product
+                $get_exist_attr = json_decode($product->attributes)[0];
+                $validate_attr = [];
+                foreach($get_exist_attr as $attr){
+                    $validate_attr[$attr] = ['required','string','exists:details_attributes,value'];
+                }
+                
+                // validate the attributes values
+                $request->validate($validate_attr);
+                // get values of attributes exists
+                foreach($get_exist_attr as $attr){
+                    $attributes[] = $request->input($attr);
+                }
+            }
             $cart_exist = Cart::where('user_id',Auth::user()->id)->first();
         
             if(!$cart_exist){
-                return $this->create_new_cart($product);
+                return $this->create_new_cart($product,$attributes);
             }else{
-                return $this->create_new_product($product,$cart_exist->id);
+                return $this->create_new_product($product,$cart_exist->id,$attributes);
             }
         }else{
             return redirect()->back()->with('errorMessage','indisponible product');
         }
         
-        
     }
 
-    public function create_new_cart(Product $product){
+    public function create_new_cart(Product $product,$attributes){
         // create the new cart
 
         $new_cart = Cart::create([
@@ -46,21 +62,29 @@ class CartController extends Controller
         ]);
 
         // add the product in details_carts 
-        return $this->create_new_product($product,$new_cart->id);
+        return $this->create_new_product($product,$new_cart->id,$attributes);
 
     }
 
-    public function create_new_product(Product $product,$cart_id){
+    public function create_new_product(Product $product,$cart_id,$attributes){
 
-        $product_exist = DetailsCart::where('cart_id',$cart_id)
+        if(count($attributes)){
+            $product_exist = DetailsCart::where('cart_id',$cart_id)
+                        ->where('product_id',$product->id)
+                        ->where('attribute',json_encode($attributes))
+                        ->first();
+        }else{
+            $product_exist = DetailsCart::where('cart_id',$cart_id)
                         ->where('product_id',$product->id)
                         ->first();
+        }
+        
         
         if(!$product_exist){
-            
             DetailsCart::create([
                 'cart_id'   => $cart_id,
                 'product_id'=> $product->id,
+                'attribute'=> count($attributes) ? json_encode($attributes):null,
             ]);
             return redirect()->back()->with('success_add_product','Product '.$product->title.' added successfully');
         }else{
@@ -136,5 +160,45 @@ class CartController extends Controller
     public function destroy(DetailsCart $cart){
         $cart->delete();
         return redirect()->back()->with('successMessage','Product '.$cart->product->title.' deleted with success');
+    }
+
+    // function to return the attributes related with another attribute : json
+    public function checkAttribute(Request $request){
+        $product = Product::find($request->product_id);
+        $attributes = json_decode($product->attributes);
+        
+        $indexes = [];
+
+        for($k = 0; $k < count($request->attribute) ; $k++){
+            for($j = 0; $j < count($attributes[0]) ; $j++){
+                if($request->attribute[$k] ==  $attributes[0][$j]){
+                    array_push($indexes,$j);
+                }
+            }
+        }
+
+        $get_values = [$request->attribute];
+        for($j=1 ; $j < count($attributes) ; $j++){
+            $k = 0;
+            for($i = 0 ; $i < count($indexes) ; $i++){
+                if($attributes[$j][$indexes[$i]] != $request->value[$k]){
+                    $i = count($indexes);
+                }else if($attributes[$j][$indexes[$i]] == $request->value[$k] && $i == (count($indexes) -1)){
+                    
+                    $array = $attributes[$j];
+                    // return response()->json([$request->attribute[$i]]);
+                    array_pop($array);
+                    for($x = 0;$x < count($indexes) ; $x++){
+                        unset($array[$indexes[$x]]);
+                    }
+                    
+                    $array = array_values($array);
+                    $get_values[] = $array;
+                }
+                $k++;
+            }
+        }
+
+        return response()->json($get_values);
     }
 }

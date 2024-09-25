@@ -23,8 +23,20 @@
                 @foreach ($orders as $order)
                 <div class="row align-items-center text-center my-3 border-top pt-2">
                     <div class="col-md">{{$order->id}}</div>
-                    <div class="col-md">{{$order->address}}</div>
-                    <div class="col-md">{{$order->phone}}</div>
+                    <div class="col-md">
+                        @if ($order->address_id)
+                            {{$order->address->address}}
+                        @else
+                            <span class="fw-bold text-danger">NONE</span>
+                        @endif 
+                    </div>
+                    <div class="col-md">
+                        @if ($order->address_id)
+                            {{$order->address->phone}}
+                        @else
+                            <span class="fw-bold text-danger">NONE</span>
+                        @endif
+                    </div>
                     <div class="col-md">
                         @if($order->status == 'pending' || $order->status == 'processing')
                             <span class="text-warning text-capitalize">{{$order->status}}</span>

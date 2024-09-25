@@ -56,7 +56,7 @@ class CheckoutController extends Controller
             // create the new order 
             $order = Order::create([
                      'user_id'          => Auth::user()->id,
-                     'ship_address'     => $request->address,
+                     'address_id'     => $request->address,
                      'payment_status'   => 'stripe',
                 ]);
             // create the new details order
@@ -65,6 +65,7 @@ class CheckoutController extends Controller
                     'order_id'      => $order->id,
                     'product_id'    => $d_cart->product_id,
                     'product_title' => $d_cart->product->title,
+                    'attribute'     => $d_cart->attribute?$d_cart->attribute:null,
                     'quantity'      => $d_cart->quantity,
                     'price'         => $d_cart->product->price, 
                 ]);
@@ -73,6 +74,32 @@ class CheckoutController extends Controller
                 $product->update([
                     'quantity'  => ($product->quantity - $d_cart->quantity),
                 ]);
+                // soustraction of special product depend to attributes
+                if($product->attributes){
+                    $product_attributes = json_decode($product->attributes);
+                    $current_attributes = json_decode($d_cart->attribute);
+                    for($i=1;$i < count($product_attributes) ; $i++){
+                        $j = 0;
+                        while($j < count($current_attributes)){
+                            if($current_attributes[$j] != $product_attributes[$i][$j]){
+                                $j = count($current_attributes);
+                            }elseif($current_attributes[$j] == $product_attributes[$i][$j] && $j == (count($current_attributes) -1)){
+                                $product_attributes[$i][$j+1] -= $d_cart->quantity;
+                                if($product_attributes[$i][$j+1] <= 0){
+                                    // delete the attribute that have no quantity
+                                    unset($product_attributes[$i]);
+
+                                    // Reindex the array
+                                    $product_attributes = array_values($product_attributes);
+                                }
+                            }
+                            $j++;
+                        }
+                    }
+                    $product->update([
+                        'attributes'  => json_encode($product_attributes),
+                    ]);
+                }
                 // delete the current details_cart 
                 $d_cart->delete();
                 

@@ -23,12 +23,29 @@
             @foreach ($cart_products as $cart)
                         @php
                             $images = json_decode($cart->product->images);
+                            $max_quantity = $cart->product->quantity;
                         @endphp
                         <div class="row my-3 align-items-center bg-light p-3 rounded">
                             <div class="col-5 col-md-3 text-md-center"><img src="{{asset('storage/'.$images[0])}}"  width="100" alt="{{$cart->product->title}} image" /></div>
                             <div class="col-7 col-md-9">
                                 <div class="row">
-                                    <div class="col-md-4 my-1 text-primary fw-bold">{{$cart->product->title}}</div>
+                                    <div class="col-md-4 my-1 text-primary fw-bold">
+                                        {{$cart->product->title}}
+                                        @if ($cart->attribute)
+                                            @php
+                                                $cart_attributes = json_decode($cart->product->attributes);
+                                                $cart_attributes_value = json_decode($cart->attribute);
+                                                foreach($cart_attributes as $cart_attribute){
+                                                    if($cart_attribute[0] == $cart_attributes_value[0] && $cart_attribute[1] == $cart_attributes_value[1]){
+                                                        $max_quantity = $cart_attribute[2];
+                                                    }
+                                                }
+                                            @endphp
+                                            @for ($i = 0; $i < count($cart_attributes[0]); $i++)
+                                                <div class="d-flex align-items-center text-capitalize gap-2 text-dark"> <h6 class="m-0">{{$cart_attributes[0][$i]}} :</h6> {{$cart_attributes_value[$i]}}</div>
+                                            @endfor
+                                        @endif
+                                    </div>
                                     <div class="col-md-4 my-1 text-md-center text-danger fw-bold">${{$cart->product->price}}</div>
                                     <div class="col-md-4 my-1">
                                         <div class="row justify-content-between align-items-center">
@@ -38,7 +55,7 @@
                                                 <div class="form-group row ms-1">
                                                     <div class="col-8 p-0">
                                                         <input type="hidden" class="cart_id" name="cart_id" value="{{$cart->id}}">
-                                                        <input type="number" min="1" max="{{$cart->product->quantity}}" name="quantity"  value="{{$cart->quantity}}" class="form-control quantity-product">
+                                                        <input type="number" min="1" max="{{$max_quantity}}" name="quantity"  value="{{$cart->quantity}}" class="form-control quantity-product">
                                                     </div>
                                                 </div>
                                             </div>

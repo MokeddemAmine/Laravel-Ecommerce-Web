@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttributesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
@@ -38,8 +39,9 @@ Route::controller(ProductController::class)->group(function(){
     Route::controller(CartController::class)->group(function(){
         Route::get('carts/{user}','show')->name('carts.show');
         Route::post('carts/update','update')->name('carts.update');
-        Route::get('carts/addToCart/{product}','store')->name('carts.store');
+        Route::post('carts/addToCart/{product}','store')->name('carts.store');
         Route::delete('carts/{cart}','destroy')->name('carts.destroy');
+        Route::post('carts/checkAttribute','checkAttribute')->name('carts.checkAttribute');
     });
 
     Route::controller(OrderController::class)->group(function(){

@@ -108,16 +108,17 @@ class OrderController extends Controller
 
         
         $address_ship = null;
-
+        
         if(is_numeric($request->address_ship)){
+            
             $request->validate([
                 'address_ship'      => ['required','numeric','exists:addresses,id'],
                 'terms_conditions'  => ['required','string','accepted'],
             ]);
 
             $address_ship = intval($request->address_ship);
-               
         }else{
+            
             $request->validate([
                 'country'           => ['required','string','not_in:Chose your country'],
                 'state'             => ['required','string','not_in:Chose your state'],
@@ -134,7 +135,6 @@ class OrderController extends Controller
             ]);
 
             $address_ship = $address->id;
-
         }
 
         return redirect('checkout/'.$address_ship);

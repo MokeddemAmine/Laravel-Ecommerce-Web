@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AdminAttributesController;
 use App\Http\Controllers\admin\AdminCategoryController;
 use App\Http\Controllers\admin\AdminHomeController;
 use App\Http\Controllers\admin\AdminProductController;
@@ -52,6 +53,13 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
         Route::delete('/products/{product}','destroy')->name('products.destroy');
 
         Route::get('/products/search','search')->name('products.search');
+    });
+
+    Route::controller(AdminAttributesController::class)->group(function(){
+        Route::get('/attributes','index')->name('attributes.index');
+        Route::get('/attributes/create','create')->name('attributes.create');
+        Route::post('/attributes','store')->name('attributes.store');
+        Route::get('/attributres/get_values','get_values')->name('attributes.get.values');
     });
 
     Route::controller(AdminOrderController::class)->group(function(){

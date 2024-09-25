@@ -32,17 +32,15 @@
                     </h6>
                   </div>
                   <div class="d-flex justify-content-between align-items-center">
-                    @if ($product->quantity)
-                      <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning btn-sm text-capitalize">add to cart</a>
-                    @else
-                      <span class="text-danger text-capitalize">indisponible</span>
-                    @endif
                     <form action="{{route('products.show',$product->slug)}}" method="POST">
                       @csrf
                       @method("GET")
                       <input type="hidden" name="window_width" class="window_width" />
-                      <input type="submit" value="Show More" class="border-0 text-primary">
+                      <button type="submit" class="btn btn-info btn-sm text-capitalize">show more</button>
                     </form>
+                    @if (!$product->quantity)
+                      <span class="text-danger text-capitalize">indisponible</span>
+                    @endif
                   </div>
               </div>
             </div>

@@ -57,7 +57,7 @@ class PayPalController extends Controller
         // create the new order
         $order = Order::create([
             'user_id'          => Auth::user()->id,
-            'ship_address'     => $request->address,
+            'address_id'     => $request->address,
             'payment_status'   => 'paypal',
             ]);
         // create the new details order
@@ -66,6 +66,7 @@ class PayPalController extends Controller
                 'order_id'      => $order->id,
                 'product_id'    => $d_cart->product_id,
                 'product_title' => $d_cart->product->title,
+                'attribute'     => $d_cart->attribute?$d_cart->attribute:null,
                 'quantity'      => $d_cart->quantity,
                 'price'         => $d_cart->product->price, 
             ]);

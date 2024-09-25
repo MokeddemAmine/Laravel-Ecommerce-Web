@@ -14,8 +14,10 @@
                 @if (session('errorAddProduct'))
                 <div class="alert alert-danger">{{session('errorAddProduct')}}</div>
                 @endif
+                
               <h2 class="my-3 fw-bold fs-2 text-primary">{{$product->title}}</h2>
-              <div class="box rounded">
+              <form method="post" action="{{route('carts.store',$product->id)}}" class="box rounded">
+                @csrf
                 @php
                     $images = json_decode($product->images);
                 @endphp
@@ -134,41 +136,85 @@
             <div class="detail-box">
                 <p class="ms-3">{{$product->description}}</p>
             </div>
+            <div class="detail-attributes">
+                @if ($product->attributes)
+                    <?php 
+                        $attributes = json_decode($product->attributes);
+                        if(count($attributes) > 1){
+                        $attributes_name = json_decode($product->attributes)[0];
+                        $attributes_value = [];
+                        $quantity = 0;
+                        for($j = 0 ; $j < count($attributes_name) ; $j ++){
+                            echo '<div class="attributes-values" data-attribute="'.$attributes_name[$j].'">';
+                            echo '<h6 class="text-capitalize text-info fw-bold" data-attribute="'.$attributes_name[$j].'">'.$attributes_name[$j].'</h6>';
+                            for($i = 1 ; $i < count($attributes) ; $i++){
+                                if(!in_array($attributes[$i][$j],$attributes_value)){
+                                    $attributes_value[] = $attributes[$i][$j];
+                    ?>
+                                    <div class="form-check form-check-inline mb-3">
+                                        <input class="form-check-input" type="radio" name="{{$attributes_name[$j]}}" id="{{$attributes_name[$j].'-'.$attributes[$i][$j]}}" value="{{$attributes[$i][$j]}}">
+                                        <label class="form-check-label attribute-value check-attribute" data-value="{{$attributes[$i][$j]}}" for="{{$attributes_name[$j].'-'.$attributes[$i][$j]}}">{{$attributes[$i][$j]}}</label>
+                                    </div>
+                    <?php 
+
+                                    
+                                }
+                                
+                            }
+                            echo '</div>';
+                        }
+                    }
+                        
+                    ?>
+                @endif
+            </div>
+            
             <div class="d-flex justify-content-end gap-2">
                 @if ($product->quantity)
-                    <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning btn-sm text-capitalize">add to cart</a>
+                    <button type="submit" class="btn btn-warning btn-sm text-capitalize">add to cart</button>
                 @else
                     <span class="text-danger text-capitalize">indisponible</span>
                 @endif
             </div>
-        </div>
+        </form >
+        @if ($errors->any)
+                    <ul class="list-unstyled">
+                        @foreach ($errors->all() as $error)
+                            <li class="fw-bold text-danger">{{$error}}</li>
+                        @endforeach
+                        
+                    </ul>
+                @endif
         @if (count($related_products))
             <h2 class="my-4 text-secondary text-capitalize">related products</h2>
             <div class="row">
-                    @foreach ($related_products as $product)
+                    @foreach ($related_products as $product_retaled)
                       <div class="col-sm-6 col-md-4 col-lg-3">
                         <div class="box">
                             @php
-                                $images = json_decode($product->images);
+                                $images = json_decode($product_retaled->images);
                             @endphp
                             <div class="img-box">
                               <img src="{{asset('storage/'.$images[0])}}" alt="">
                             </div>
                             <div class="detail-box">
-                              <h6>{!!Str::limit($product->title,30)!!}</h6>
+                              <h6>{!!Str::limit($product_retaled->title,30)!!}</h6>
                               <h6>
-                                <span>${{$product->price}}</span>
+                                <span>${{$product_retaled->price}}</span>
                               </h6>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <a href="{{route('carts.store',$product->id)}}" class="btn btn-warning text-capitalize">add to cart</a>
-                                <form action="{{route('products.show',$product->slug)}}" method="POST">
-                                    @csrf
-                                    @method("GET")
-                                    <input type="hidden" name="window_width" id="window_width" />
-                                    <input type="submit" value="Show More" class="border-0 text-primary">
+                                
+                                <form action="{{route('products.show',$product_retaled->slug)}}" method="POST">
+                                  @csrf
+                                  @method("GET")
+                                  <input type="hidden" name="window_width" class="window_width" />
+                                  <button type="submit" class="btn btn-info btn-sm text-capitalize">show more</button>
                                 </form>
-                              </div>
+                                @if (!$product_retaled->quantity)
+                                  <span class="text-danger text-capitalize">indisponible</span>
+                                @endif
+                            </div>
                             
                         </div>
                       </div>
@@ -195,6 +241,88 @@
             $('#imagesModal').on('hide.bs.modal',function(){
                 $('.image-clicked-send').removeClass('active');
             })
+        
+      
+            var check_attribute = $('.check-attribute');
+            check_attribute.click(function(){
+                if($(this).hasClass('check-attribute')){
+                    $(this).parent().siblings().children('.check-attribute').removeClass('active');
+                    $(this).addClass('active');
+                    var attributes = [];
+                    var values = [];
+                    $.each($('input[type="radio"]:checked'),function(index,value){
+                        attributes.push($(this).attr('name'));
+                        values.push($(this).val())
+                    })
+                    if(!attributes.includes($(this).parent().siblings('h6').data('attribute'))){
+                        attributes.push($(this).parent().siblings('h6').data('attribute'))
+                        values.push($(this).data('value'))
+                    }else{
+                        let get_index = attributes.indexOf($(this).parent().siblings('h6').data('attribute'));
+                        values[get_index] = $(this).data('value');
+                    }
+                    console.log(attributes);
+                    console.log(values);
+                    
+                    $.ajax({
+                        type:'POST',
+                        url:"{{route('carts.checkAttribute')}}",
+                        dataType:'json',
+                        cache:false,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data:{
+                            attribute:attributes,
+                            value:values,
+                            product_id:"{{$product->id}}",
+                        },
+                        success:function(data){
+                            console.log(data)
+                            let array = [];
+                            let keys = data[0];
+                            let j = data[1].length;
+                            
+                                for(let k = 0 ; k < j ; k++){
+                                    for(let i = 1 ; i < data.length ; i++){  
+                                        if(!array.includes(data[i][k])){
+                                            array.push(data[i][k]);
+                                        }
+                                    }
+                                }
+                            
+                                
+                                
+                                $.each($('.attributes-values'),function(index,value){
+                                    if(!keys.includes($(this).data('attribute'))){
+                                        
+                                        let inputs = $(this).find('.form-check-input');
+                                        let labels = $(this).find('.form-check-label');
+                                        $.each(inputs,function(index,value){
+                                            $(this).removeAttr('disabled');
+                                            if(!$(this).next('.from-check-label').hasClass('check-attribute')){
+                                                $(this).next('.form-check-label').addClass('check-attribute');
+                                            }
+                                            
+                                            if (array.indexOf($(this).val()) == -1) {
+                                                $(this).attr('disabled','disabled');
+                                                $(this).next('.form-check-label').removeClass('check-attribute');
+                                            }
+                                        })
+                                    }
+                                })
+                                
+                            
+                            
+
+                        },
+                        error:function(xhr,error){
+                            console.log(xhr,error);
+                        }
+                    })
+                }
+            })
         })
-      </script>
+    </script>
   @endsection
+  

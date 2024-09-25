@@ -30,10 +30,19 @@
                                 {{$order->user->name}}
                             </div>
                             <div class="col-md-3">
-                                {{$order->address}}
+                                @if ($order->address_id)
+                                    {{$order->address->address}}
+                                @else
+                                    <span class="fw-bold text-danger">NONE</span>
+                                @endif
+                                
                             </div>
                             <div class="col-md-2">
-                                {{$order->phone}}
+                                @if ($order->address_id)
+                                {{$order->address->phone}}
+                            @else
+                                <span class="fw-bold text-danger">NONE</span>
+                            @endif
                             </div>
                             <div class="col-md-1">
                                 <span class="@if($order->status == 'pending' || $order->status == 'processing') text-warning @elseif($order->status == 'shipping' || $order->status == 'delivered') text-info @elseif($order->status == 'confirmed') text-success @elseif($order->status == 'canceled') text-danger @endif">{{$order->status}}</span>

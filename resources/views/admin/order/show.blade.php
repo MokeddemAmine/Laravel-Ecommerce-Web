@@ -27,6 +27,7 @@
                 <div class="col">Num</div>
                 <div class="col">Image</div>
                 <div class="col">Title</div>
+                <div class="col">Features</div>
                 <div class="col">Quantity</div>
                 <div class="col text-end">Unit Price</div>
             </div>
@@ -49,6 +50,30 @@
                                 @endif
                             </div>
                             <div class="col">{{$unit_order->product_title}}</div>
+                            <div class="col">
+                                @if ($unit_order->attribute)
+                                    @php
+                                        $get_values = json_decode($unit_order->attribute);
+                                        if($unit_order->product){
+                                            $get_attributes = json_decode($unit_order->product->attributes)[0];
+                                            
+                                            for ($i=0; $i < count($get_values); $i++) { 
+                                                echo '<div class="text-capitalize">';
+                                                echo $get_attributes[$i].' : '.$get_values[$i];
+                                                echo '</div>';
+                                            }
+                                        }else{
+                                            for ($i=0; $i < count($get_values); $i++) { 
+                                                echo '<div class="text-capitalize">';
+                                                echo    $get_values[$i];
+                                                echo '</div>';
+                                            }
+                                        }
+                                    @endphp
+                                @else
+                                    <span class="text-danger fw-bold">NONE</span>
+                                @endif
+                            </div>
                             <div class="col">{{$unit_order->quantity}}</div>
                             <div class="col text-end">${{$unit_order->price}}</div>
                         </div>
