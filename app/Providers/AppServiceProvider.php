@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\CartController;
+use App\Models\Display;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,5 +37,12 @@ class AppServiceProvider extends ServiceProvider
             $cartCount = $cartController->getCartCount();
             $view->with('cart_count', $cartCount);
         });
+
+        $about = Display::where('section','about')->first();
+        $contact = Display::where('section','contact')->get();
+        $media = Display::where('section','media')->get();
+        View::share('about',$about);
+        View::share('contact',$contact);
+        View::share('media',$media);
     }
 }

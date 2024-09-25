@@ -7,10 +7,13 @@ use App\Http\Controllers\admin\AdminProductController;
 use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\admin\auth\AdminLoginController;
 use App\Http\Controllers\admin\auth\AdminRegisterController;
+use App\Http\Controllers\admin\display\AboutController;
+use App\Http\Controllers\admin\display\ContactController;
+use App\Http\Controllers\admin\display\HomeController;
+use App\Http\Controllers\admin\display\MediaController;
+use App\Http\Controllers\admin\DisplayController;
 use App\Http\Controllers\admin\MessageController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use ParagonIE\Sodium\Core\Curve25519\Ge\P2;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +92,38 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
     Route::controller(AdminRegisterController::class)->group(function(){
         Route::get('register','register')->name('register');
         Route::post('register','store')->name('store');
+    });
+
+    
+    Route::prefix('/displays')->name('displays.')->group(function(){
+        Route::controller(DisplayController::class)->group(function(){
+            Route::get('/','index')->name('index');
+        });
+
+        Route::controller(HomeController::class)->group(function(){
+            Route::prefix('/home')->name('home.')->group(function(){
+                Route::get('/','index')->name('index');
+                Route::post('/','update')->name('update');
+            });
+        });
+        Route::controller(AboutController::class)->group(function(){
+            Route::prefix('/about')->name('about.')->group(function(){
+                Route::get('/','index')->name('index');
+                Route::post('/','update')->name('update');
+            });
+        });
+        Route::controller(ContactController::class)->group(function(){
+            Route::prefix('/contact')->name('contact.')->group(function(){
+                Route::get('/','index')->name('index');
+                Route::post('/','update')->name('update');
+            });
+        });
+        Route::controller(MediaController::class)->group(function(){
+            Route::prefix('/media')->name('media.')->group(function(){
+                Route::get('/','index')->name('index');
+                Route::post('/','update')->name('update');
+            });
+        });
     });
 });
 

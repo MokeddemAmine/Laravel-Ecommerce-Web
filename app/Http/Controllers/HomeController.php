@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\DetailsCart;
+use App\Models\Display;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -28,8 +29,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->take(8)->get();;
-        return view('index',compact('products'));
+        $products = Product::latest()->take(8)->get();
+        $home = Display::where('section','home')->first();
+        return view('index',compact('products','home'));
     }
     public function contact(){
         return view('contact');
