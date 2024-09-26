@@ -15,8 +15,8 @@
                 <div class="alert alert-danger">{{session('errorAddProduct')}}</div>
                 @endif
                 
-              <h2 class="my-3 fw-bold fs-2 text-primary">{{$product->title}}</h2>
-              <form method="post" action="{{route('carts.store',$product->id)}}" class="box rounded">
+              <h2 class="my-3 fw-bold fs-2 text-danger">{{$product->title}}</h2>
+              <form method="post" action="{{route('carts.store',$product->id)}}" class="box rounded bg-dark text-white p-3">
                 @csrf
                 @php
                     $images = json_decode($product->images);
@@ -125,7 +125,7 @@
                 </div>
               </div>
             <div class="detail-box mt-4">
-                <h6 class="text-primary fw-bold">{{$product->title}}</h6>
+                <h6 class="text-danger fw-bold">{{$product->title}}</h6>
                 <h6>
                   <span>${{$product->price}}</span>
                 </h6>
@@ -153,7 +153,7 @@
                     ?>
                                     <div class="form-check form-check-inline mb-3">
                                         <input class="form-check-input" type="radio" name="{{$attributes_name[$j]}}" id="{{$attributes_name[$j].'-'.$attributes[$i][$j]}}" value="{{$attributes[$i][$j]}}">
-                                        <label class="form-check-label attribute-value check-attribute" data-value="{{$attributes[$i][$j]}}" for="{{$attributes_name[$j].'-'.$attributes[$i][$j]}}">{{$attributes[$i][$j]}}</label>
+                                        <label class="form-check-label attribute-value check-attribute text-dark" data-value="{{$attributes[$i][$j]}}" for="{{$attributes_name[$j].'-'.$attributes[$i][$j]}}">{{$attributes[$i][$j]}}</label>
                                     </div>
                     <?php 
 
@@ -171,7 +171,7 @@
             
             <div class="d-flex justify-content-end gap-2">
                 @if ($product->quantity)
-                    <button type="submit" class="btn btn-warning btn-sm text-capitalize">add to cart</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm text-capitalize">add to cart</button>
                 @else
                     <span class="text-danger text-capitalize">indisponible</span>
                 @endif
@@ -188,30 +188,25 @@
         @if (count($related_products))
             <h2 class="my-4 text-secondary text-capitalize">related products</h2>
             <div class="row">
-                    @foreach ($related_products as $product_retaled)
+                    @foreach ($related_products as $product_related)
                       <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="box">
+                        <div class="box bg-dark text-white rounded">
                             @php
-                                $images = json_decode($product_retaled->images);
+                                $images = json_decode($product_related->images);
                             @endphp
                             <div class="img-box">
                               <img src="{{asset('storage/'.$images[0])}}" alt="">
                             </div>
                             <div class="detail-box">
-                              <h6>{!!Str::limit($product_retaled->title,30)!!}</h6>
+                              <h6>{!!Str::limit($product_related->title,30)!!}</h6>
                               <h6>
-                                <span>${{$product_retaled->price}}</span>
+                                <span>${{$product_related->price}}</span>
                               </h6>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 
-                                <form action="{{route('products.show',$product_retaled->slug)}}" method="POST">
-                                  @csrf
-                                  @method("GET")
-                                  <input type="hidden" name="window_width" class="window_width" />
-                                  <button type="submit" class="btn btn-info btn-sm text-capitalize">show more</button>
-                                </form>
-                                @if (!$product_retaled->quantity)
+                                <a href="{{route('products.show',$product_related->slug)}}" class="btn btn-outline-info btn-sm text-light text-capitalize">show more</a>
+                                @if (!$product_related->quantity)
                                   <span class="text-danger text-capitalize">indisponible</span>
                                 @endif
                             </div>

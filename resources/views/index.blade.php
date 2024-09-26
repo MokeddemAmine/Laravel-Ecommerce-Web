@@ -54,7 +54,7 @@
   <section class="shop_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
-        <h2>
+        <h2 class="text-danger">
           Latest Products
         </h2>
       </div>
@@ -68,7 +68,7 @@
         @if (count($products))
             @foreach ($products as $product)
               <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="box">
+                <div class="box bg-dark text-white rounded">
 
                     @php
                         $images = json_decode($product->images);
@@ -83,20 +83,14 @@
                       </h6>
                     </div>
                     <div class="new">
-                      <span>
+                      <span class="text-dark fw-bold">
                         New
                       </span>
                     </div>
 
                     
                     <div class="d-flex justify-content-between align-items-center">
-                      
-                      <form action="{{route('products.show',$product->slug)}}" method="POST">
-                        @csrf
-                        @method("GET")
-                        <input type="hidden" name="window_width" class="window_width" />
-                        <button type="submit" class="btn btn-info btn-sm text-capitalize">show more</button>
-                      </form>
+                      <a href="{{route('products.show',$product->slug)}}" class="btn btn-outline-info btn-sm text-light text-capitalize">show more</a>
                       @if (!$product->quantity)
                         <span class="text-danger text-capitalize">indisponible</span>
                       @endif

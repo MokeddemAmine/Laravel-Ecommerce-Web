@@ -69,12 +69,11 @@ body {
 
 #navbarSupportedContent {
   width: 100%;
-  background-color: skyblue;
+  background-color: #212529;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   padding: 10px 0;
-  border-radius: 15px 15px 0 0;
 }
 
 #navbarSupportedContent.innerpage_navbar {
@@ -85,19 +84,20 @@ body {
 }
 
 #navbarSupportedContent.innerpage_navbar .nav-item.active .nav-link {
-  background-color: #f4f5f6;
+  background-color: #000;
 }
 
 #navbarSupportedContent .navbar-nav .nav-link {
   padding: 5px 25px;
-  color: #514f4f;
+  color: #f8f9fa !important;
   text-align: center;
   text-transform: uppercase;
   border-radius: 5px;
 }
 
 #navbarSupportedContent .nav-item.active .nav-link {
-  background-color: #ffffff;
+  background-color: #dc3545;
+  border-radius:.5rem;
 }
 
 a,
@@ -222,9 +222,9 @@ a:focus {
   margin-left: 25px;
 }
 
-.user_option a {
+.user_option a#navbarDropdown , #shopping-cart {
   margin-right: 25px;
-  color: #000000;
+  color: #f8f9fa;
 }
 
 .user_option a span {
@@ -852,3 +852,43 @@ a:focus {
 
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */
+.shop_section .box .img-box{
+  overflow: hidden;
+}
+.shop_section .box .img-box img{
+  transition: .5s;
+}
+.shop_section .box .img-box:hover img {
+  transform: scale(1.2) rotate(5deg);
+}
+#btn-filtering{
+  width:150px;
+  position:absolute;
+  top:7rem;
+  transition:.5s;
+  z-index:1000;
+}
+#filtering{
+  width:500px;
+  max-width:100%;
+  position:absolute;
+  top:7rem;
+  left:-200%;
+  transition:.5s;
+  z-index:1000;
+}
+input::placeholder, textarea::placeholder {
+  color: white !important; /* Change this to the color you want */
+  opacity: 1;  /* Optional: To ensure full opacity for the color */
+}
+input::-webkit-input-placeholder {
+  color: white !important;
+}
+
+input:-ms-input-placeholder { /* For Internet Explorer 10-11 */
+  color: white !important;
+}
+
+input::-ms-input-placeholder { /* For Microsoft Edge */
+  color: white !important;
+}

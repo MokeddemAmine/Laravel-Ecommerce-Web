@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="order-page">
-        <h2 class="text-primary my-3">My Orders</h2>
+        <h2 class="my-3 fs-3"><a href="{{route('user.profile')}}" class="text-capitalize text-danger">profile</a> / Orders</h2>
         @if (session('successMessage'))
             <div class="my-3 alert alert-success fw-bold">{{session('successMessage')}}</div>
         @endif
@@ -21,20 +21,20 @@
             </row>
             
                 @foreach ($orders as $order)
-                <div class="row align-items-center text-center my-3 border-top pt-2">
+                <div class="row align-items-center text-center bg-dark text-white my-3 border-top py-2">
                     <div class="col-md">{{$order->id}}</div>
                     <div class="col-md">
                         @if ($order->address_id)
                             {{$order->address->address}}
                         @else
-                            <span class="fw-bold text-danger">NONE</span>
+                            <span class="fw-bold text-secondary">NONE</span>
                         @endif 
                     </div>
                     <div class="col-md">
                         @if ($order->address_id)
                             {{$order->address->phone}}
                         @else
-                            <span class="fw-bold text-danger">NONE</span>
+                            <span class="fw-bold text-secondary">NONE</span>
                         @endif
                     </div>
                     <div class="col-md">

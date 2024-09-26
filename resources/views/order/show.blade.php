@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     <div class="order-page">
+        <h1 class="my-3 fs-3 text-capitalize"><a href="{{route('user.profile')}}" class="text-danger">profile</a> / <a href="{{route('orders.index')}}" class="text-danger">orders</a> / N {{$order->id}}</h1>
         <div class="d-flex">
             <a href="{{route('orders.index')}}" class="text-primary fw-bold">My Orders</a>
             <span class="mx-2">/</span>
@@ -31,7 +32,7 @@
                     if($item->product_id)
                         $image = json_decode($item->product->images)[0];
                 @endphp
-                <div class="row align-items-center text-md-center my-3 border-top pt-2">
+                <div class="row align-items-center text-md-center my-3 bg-dark text-white border-top py-2">
                     <div class="col-md">{{$item->id}}</div>
                     <div class="col-md">
                         @if ($item->product_id)

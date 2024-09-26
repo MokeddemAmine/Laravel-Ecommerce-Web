@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="order-page">
-        <h2 class="text-primary my-3">Order</h2>
+        <h2 class="text-danger my-3">Order</h2>
         @if (session('successMessage'))
             <div class="my-3 alert alert-success fw-bold">{{session('successMessage')}}</div>
         @endif
@@ -20,7 +20,7 @@
                         @csrf
                         @if (count($addresses))
                             @foreach ($addresses as $address)
-                                <div class="card mb-3">
+                                <div class="card mb-3 bg-dark text-white">
                                     <div class="card-body">
                                         
                                             <div class="input-group">
@@ -39,7 +39,7 @@
                         
                         @endif
                         
-                        <div class="card mb-3">
+                        <div class="card mb-3 bg-dark text-white">
                             <div class="card-body">
                                 
                                     @if (count($addresses))
@@ -48,7 +48,7 @@
                                             <div class="input-group-text me-3">
                                             <input class="form-check-input mt-0" type="radio" name="address_ship" value="new_address" aria-label="Radio button for following text input" checked>
                                             </div>
-                                            <h6 class="text-capitalize text-info m-0">new address</h6>
+                                            <h6 class="text-capitalize text-dark fw-bold m-0">new address</h6>
                                         </div>
 
                                     @endif
@@ -60,7 +60,7 @@
                                         <div class="form-group mb-5 row align-items-center">
                                             <label for="country" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">country</label>
                                             <div class="col-md-8">
-                                                <select name="country" id="country" class="form-select">
+                                                <select name="country" id="country" class="form-select bg-dark text-white">
                                                     <option hidden>Chose your country</option>
                                                 </select>
                                             </div>
@@ -68,7 +68,7 @@
                                         <div class="form-group row align-items-center mb-5">
                                             <label for="state" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">state</label>
                                             <div class="col-md-8">
-                                                <select name="state" id="state" class="form-select">
+                                                <select name="state" id="state" class="form-select bg-dark text-white">
                                                     <option hidden>Chose your state</option>
                                                 </select>
                                             </div>
@@ -76,7 +76,7 @@
                                         <div class="form-group row align-items-center mb-5">
                                             <label for="address" class="col-md-4 mb-3 mb-md-0 text-capitalize fw-bold">address</label>
                                             <div class="col-md-8">
-                                                <input type="text" name="address" value="{{old('address')}}" id="address" placeholder="Enter your address" class="form-control">
+                                                <input type="text" name="address" value="{{old('address')}}" id="address" placeholder="Enter your address" class="form-control bg-dark text-white">
                                             </div>
                                         </div>
                                         <div class="form-group row align-items-center mb-5">
@@ -84,12 +84,12 @@
                                             <div class="col-md-8">
                                                 <div class="input-group mb-3">
                                                     <div class="col-3">
-                                                        <select name="code_phone" id="code_phone" class="form-select">
+                                                        <select name="code_phone" id="code_phone" class="form-select bg-dark text-white">
                                                             <option hidden>code</option>
                                                         </select>
                                                     </div>
                                                     
-                                                    <input type="text" name="phone" value="{{old('phone')}}" class="form-control" id="phone" aria-label="Text input with dropdown button" placeholder="Your phone number">
+                                                    <input type="text" name="phone" value="{{old('phone')}}" class="form-control bg-dark text-white" id="phone" aria-label="Text input with dropdown button" placeholder="Your phone number">
                                                 </div>
                                             </div>
                                         </div>
@@ -100,11 +100,11 @@
                         
                         <div class="form-check form-switch mb-5">
                             <input class="form-check-input" name="terms_conditions" type="checkbox" value="yes" role="switch" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">use Terms and conditions</label>
+                            <label class="form-check-label text-capitalize fw-bold" for="flexSwitchCheckDefault">use Terms and conditions</label>
                         </div>
                         
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-warning">Proceed to Checkout <i class="fa-solid fa-chevron-right"></i></button>
+                            <button type="submit" class="btn btn-outline-danger">Proceed to Checkout <i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                     </form>   
                 
@@ -127,11 +127,11 @@
                         @php
                             $images = json_decode($cart->product->images);
                         @endphp
-                        <div class="row align-items-center bg-light pb-2 rounded">
+                        <div class="row align-items-center bg-dark pb-2 rounded mb-2">
                             <div class="col-5  text-md-center"><img src="{{asset('storage/'.$images[0])}}"  width="50" alt="{{$cart->product->title}} image" /></div>
                             <div class="col-7 ">
                                 <div class="row">
-                                    <div class="col-12 text-primary fw-bold">{{$cart->product->title}}</div>
+                                    <div class="col-12 text-white fw-bold">{{$cart->product->title}}</div>
                                     @if ($cart->attribute)
                                         @php
                                             $attribute = json_decode($cart->attribute);
@@ -176,7 +176,7 @@
                     @endforeach
                     <div class="my-3 p-3 d-flex justify-content-between fw-bold" >
                         <h4>Total: </h4>
-                        <span class="fs-4">$<span id="total-price">{{$total}}</span></span> 
+                        <span class="fs-4 text-danger">$<span id="total-price">{{$total}}</span></span> 
                     </div>
                     </div>
                 </div>

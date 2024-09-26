@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="order-page">
-        <h2 class="text-primary my-3">Checkout</h2>
+        <h2 class="text-danger my-3">Checkout</h2>
         
         @if (session('successMessage'))
             <div class="my-3 alert alert-success fw-bold">{{session('successMessage')}}</div>
@@ -14,12 +14,93 @@
         @if ($address)
             <div class="row">
                 <div class="col-md-8">
-                    <div class="card mb-3">
+                    <div class="card mb-3 bg-dark text-white">
                         <div class="card-body">
-                            <h6 class="text-info text-capitalize">shipping address</h6>
+                            <h6 class="text-secondary text-capitalize">shipping address</h6>
                             <div class="my-3 ms-3">
                                 <p>{{$address->address}}</p>
                                 <p>{{$address->phone}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-3">
+                        <div class="card bg-dark text-white my-3">
+                            <h6 class="card-header d-flex justify-content-between align-items-center">
+                                <span class="text-info">Stripe Payment</span>
+                                <i class="fa-solid fa-chevron-right icon"></i>
+                            </h6>
+                            <div class="card-body" style="display: none">
+                                <form role="form" 
+                                action="{{ route('checkout.store') }}" 
+                                method="post" 
+                                class="require-validation"
+                                data-cc-on-file="false"
+                                data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                                id="payment-form">
+                                    @csrf
+                                    <input type="hidden" name="address" value="{{$address->id}}" />
+                                    <input type="hidden" name="payment" value="stripe" />
+                                    <div class='form-row row'>
+                                        <div class='col-xs-12 form-group required'>
+                                            <label class='control-label'>Name on Card</label> 
+                                            <input class='form-control bg-dark text-white' size='4' type='text'>
+                                        </div>
+                                    </div>
+                
+                                    <div class='form-row row'>
+                                        <div class='col-xs-12 form-group required'>
+                                            <label class='control-label'>Card Number</label> <input
+                                                autocomplete='off' class='form-control card-number  bg-dark text-white' size='20'
+                                                type='text'>
+                                        </div>
+                                    </div>
+                
+                                    <div class='form-row row'>
+                                        <div class='col-xs-12 col-md-4 form-group cvc required'>
+                                            <label class='control-label'>CVC</label> <input autocomplete='off'
+                                                class='form-control card-cvc  bg-dark text-white' placeholder='ex. 311' size='4'
+                                                type='text'>
+                                        </div>
+                                        <div class='col-xs-12 col-md-4 form-group expiration required'>
+                                            <label class='control-label'>Expiration Month</label> <input
+                                                class='form-control card-expiry-month  bg-dark text-white' placeholder='MM' size='2'
+                                                type='text'>
+                                        </div>
+                                        <div class='col-xs-12 col-md-4 form-group expiration required'>
+                                            <label class='control-label'>Expiration Year</label> <input
+                                                class='form-control card-expiry-year  bg-dark text-white' placeholder='YYYY' size='4'
+                                                type='text'>
+                                        </div>
+                                    </div>
+                
+                                    <div class='form-row row my-3'>
+                                        <div class='col-md-12 error form-group hide'>
+                                            <div class='alert-danger alert'>Please correct the errors and try
+                                                again.</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2">
+                                        <input type="submit" value="checkout" class="btn btn-danger text-capitalize">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card my-3 bg-dark text-white">
+                            <h6 class="card-header d-flex justify-content-between align-items-center">
+                                <span style="color:#0070BA !important">PayPal</span>
+                                <i class="fa-solid fa-chevron-right icon"></i>
+                            </h6>
+                            <div class="card-body" style="display: none">
+                                <form action="{{route('checkout.store')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="address" value="{{$address->id}}" />
+                                    <input type="hidden" name="payment" value="paypal" />
+                                    <div class="d-grid gap-2">
+                                        <input type="text" name="email" placeholder="Enter your paypal email" class="form-control  bg-dark text-white">
+                                        <input type="submit" value="PayPal" class="btn btn-primary" style="background-color: #0070BA !important;color:white">
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -34,16 +115,16 @@
                     @php
                         $images = json_decode($cart->product->images);
                     @endphp
-                    <div class="row align-items-center bg-light pb-2 rounded">
+                    <div class="row align-items-center bg-dark text-white mb-2 pb-2 rounded">
                         <div class="col-5  text-md-center"><img src="{{asset('storage/'.$images[0])}}"  width="50" alt="{{$cart->product->title}} image" /></div>
                         <div class="col-7 ">
                             <div class="row">
-                                <div class="col-12 text-primary fw-bold">{{$cart->product->title}}</div>
+                                <div class="col-12 text-white fw-bold">{{$cart->product->title}}</div>
                                 @if ($cart->attribute)
                                         @php
                                             $attribute = json_decode($cart->attribute);
                                         @endphp
-                                        <div class="col-12 text-dark text-capitalize ">
+                                        <div class="col-12 text-white text-capitalize ">
                                             @foreach ($attribute as $attr)
                                                 {{$attr}} 
                                             @endforeach
@@ -64,91 +145,11 @@
                     @endforeach
                     <div class="my-3 p-3 d-flex justify-content-between fw-bold" >
                         <h4>Total: </h4>
-                        <span class="fs-4">$<span id="total-price">{{$total}}</span></span> 
+                        <span class="fs-4 text-danger">$<span id="total-price">{{$total}}</span></span> 
                     </div>
                     </div>
                 </div>
-                <div class="col-md-8 my-3">
-                    <div class="card my-3">
-                        <h6 class="card-header d-flex justify-content-between align-items-center">
-                            <span>Stripe Payment</span>
-                            <i class="fa-solid fa-chevron-right icon"></i>
-                        </h6>
-                        <div class="card-body" style="display: none">
-                            <form role="form" 
-                            action="{{ route('checkout.store') }}" 
-                            method="post" 
-                            class="require-validation"
-                            data-cc-on-file="false"
-                            data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
-                            id="payment-form">
-                                @csrf
-                                <input type="hidden" name="address" value="{{$address->id}}" />
-                                <input type="hidden" name="payment" value="stripe" />
-                                <div class='form-row row'>
-                                    <div class='col-xs-12 form-group required'>
-                                        <label class='control-label'>Name on Card</label> 
-                                        <input class='form-control' size='4' type='text'>
-                                    </div>
-                                </div>
-            
-                                <div class='form-row row'>
-                                    <div class='col-xs-12 form-group required'>
-                                        <label class='control-label'>Card Number</label> <input
-                                            autocomplete='off' class='form-control card-number' size='20'
-                                            type='text'>
-                                    </div>
-                                </div>
-            
-                                <div class='form-row row'>
-                                    <div class='col-xs-12 col-md-4 form-group cvc required'>
-                                        <label class='control-label'>CVC</label> <input autocomplete='off'
-                                            class='form-control card-cvc' placeholder='ex. 311' size='4'
-                                            type='text'>
-                                    </div>
-                                    <div class='col-xs-12 col-md-4 form-group expiration required'>
-                                        <label class='control-label'>Expiration Month</label> <input
-                                            class='form-control card-expiry-month' placeholder='MM' size='2'
-                                            type='text'>
-                                    </div>
-                                    <div class='col-xs-12 col-md-4 form-group expiration required'>
-                                        <label class='control-label'>Expiration Year</label> <input
-                                            class='form-control card-expiry-year' placeholder='YYYY' size='4'
-                                            type='text'>
-                                    </div>
-                                </div>
-            
-                                <div class='form-row row my-3'>
-                                    <div class='col-md-12 error form-group hide'>
-                                        <div class='alert-danger alert'>Please correct the errors and try
-                                            again.</div>
-                                    </div>
-                                </div>
-                                
-                                <div class="d-grid gap-2">
-                                    <input type="submit" value="checkout" class="btn btn-warning text-capitalize">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card my-3">
-                        <h6 class="card-header d-flex justify-content-between align-items-center">
-                            <span>PayPal</span>
-                            <i class="fa-solid fa-chevron-right icon"></i>
-                        </h6>
-                        <div class="card-body" style="display: none">
-                            <form action="{{route('checkout.store')}}" method="post">
-                                @csrf
-                                <input type="hidden" name="address" value="{{$address->id}}" />
-                                <input type="hidden" name="payment" value="paypal" />
-                                <div class="d-grid gap-2">
-                                    <input type="text" name="email" placeholder="Enter your paypal email" class="form-control">
-                                    <input type="submit" value="PayPal" class="btn btn-primary" style="background-color: #0070BA !important;color:white">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                
                 
                        
                 

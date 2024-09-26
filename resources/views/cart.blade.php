@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="cart-page">
-        <h2 class="my-3 text-primary text-capitalize">shoppint cart</h2>
+        <h2 class="my-3 text-danger text-capitalize">shoppint cart</h2>
         @if (session('successMessage'))
             <div class="my-3 text-success fw-bold">{{session('successMessage')}}</div>
         @endif
@@ -25,11 +25,11 @@
                             $images = json_decode($cart->product->images);
                             $max_quantity = $cart->product->quantity;
                         @endphp
-                        <div class="row my-3 align-items-center bg-light p-3 rounded">
+                        <div class="row my-3 align-items-center bg-dark text-white p-3 rounded">
                             <div class="col-5 col-md-3 text-md-center"><img src="{{asset('storage/'.$images[0])}}"  width="100" alt="{{$cart->product->title}} image" /></div>
                             <div class="col-7 col-md-9">
-                                <div class="row">
-                                    <div class="col-md-4 my-1 text-primary fw-bold">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 my-1 text-danger fw-bold">
                                         {{$cart->product->title}}
                                         @if ($cart->attribute)
                                             @php
@@ -42,7 +42,7 @@
                                                 }
                                             @endphp
                                             @for ($i = 0; $i < count($cart_attributes[0]); $i++)
-                                                <div class="d-flex align-items-center text-capitalize gap-2 text-dark"> <h6 class="m-0">{{$cart_attributes[0][$i]}} :</h6> {{$cart_attributes_value[$i]}}</div>
+                                                <div class="d-flex align-items-center text-capitalize gap-2 text-white"> <h6 class="m-0">{{$cart_attributes[0][$i]}} :</h6> {{$cart_attributes_value[$i]}}</div>
                                             @endfor
                                         @endif
                                     </div>
@@ -78,9 +78,9 @@
                             $total += $cart->product->price * $cart->quantity;
                         @endphp
                     @endforeach
-                    <div class="my-3 p-3 text-end fw-bold" ><span class="me-3">Total: </span> $<span id="total-price">{{$total}}</span> </div>
+                    <div class="my-3 p-3 text-end fw-bold" ><span class="me-3">Total: </span> <span id="total-price" class="text-danger">${{$total}}</span> </div>
                     <div class="my-3 text-end">
-                        <a href="{{route('orders.create')}}" class="btn btn-warning btn-sm text-capitalize fw-bold">go to order <i class="fa-solid fa-chevron-right"></i></a>
+                        <a href="{{route('orders.create')}}" class="btn btn-outline-danger btn-sm text-capitalize fw-bold">go to order <i class="fa-solid fa-chevron-right"></i></a>
                     </div>
         @else
             <div class="text-center my-5 alert alert-info fw-bold">There are no product in your cart</div>

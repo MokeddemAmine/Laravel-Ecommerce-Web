@@ -29,13 +29,13 @@
             @guest
                 @if (Route::has('login'))
                         
-                            <a href="{{ route('login') }}"><i class="fa fa-user"></i> {{ __('Login') }}</a>
+                            <a href="{{ route('login') }}" class="text-danger me-3"><i class="fa fa-user"></i> {{ __('Login') }}</a>
                         
                     @endif
 
                     @if (Route::has('register'))
                         
-                            <a href="{{ route('register') }}"><i class="fa fa-user-plus"></i> {{ __('Register') }}</a>
+                            <a href="{{ route('register') }}" class="text-danger"><i class="fa fa-user-plus"></i> {{ __('Register') }}</a>
                         
                     @endif
                 @else
@@ -44,14 +44,14 @@
                             {{ Auth::user()->name }}
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('user.profile') }}">
+                        <div class="dropdown-menu dropdown-menu-end bg-dark" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-white" href="{{ route('user.profile') }}">
                                 {{ __('Profile') }}
                             </a>
-                            <a class="dropdown-item" href="{{ route('orders.index') }}">
+                            <a class="dropdown-item text-white" href="{{ route('orders.index') }}">
                               {{ __('My Orders') }}
                           </a>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            <a class="dropdown-item text-white" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
@@ -65,7 +65,7 @@
                     <a href="{{route('carts.show',Auth::user()->id)}}" id="shopping-cart">
                       <i class="fa fa-shopping-bag" aria-hidden="true" >
                         @if ($cart_count)
-                          <span class="d-inline-block bg-warning rounded-circle p-1 fw-bold">{{$cart_count}}</span>
+                          <span class="d-inline-block bg-danger rounded-circle p-1 fw-bold">{{$cart_count}}</span>
                         @endif
                       </i>
                     </a>

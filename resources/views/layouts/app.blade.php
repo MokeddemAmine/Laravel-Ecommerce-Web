@@ -46,42 +46,42 @@
             @yield('content')
         </main>
 
-        <section class="info_section  layout_padding2-top">
+        <section class="layout_padding2-top m-5 bg-dark rounded mx-auto" style="position: relative;max-width:1500px;">
             <div class="info_container ">
               <div class="container">
                 <div class="row">
                   @if ($about)
                     <div class="col-md-6 col-lg-4">
-                      <h6>
+                      <h6 class="text-white">
                         ABOUT US
                       </h6>
-                      <p>
+                      <p class="text-secondary">
                         {{$about->description}}
                       </p>
                     </div>
                   @endif
                   @if ($contact && count($contact))
                   <div class="col-md-6 col-lg-4">
-                    <h6>
+                    <h6 class="text-white">
                       CONTACT US
                     </h6>
                     
                     <div class="info_link-box">
                       @foreach ($contact as $item)
                         @if ($item->title == 'map')
-                          <a href="">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <span>{{$item->description}}</span>
+                          <a href="" class="d-block mb-2" >
+                            <i class="fa fa-map-marker text-danger" aria-hidden="true"></i>
+                            <span class="text-secondary">{{$item->description}}</span>
                           </a>
                         @elseif($item->title == 'phone')
-                          <a href="">
-                            <i class="fa fa-phone" aria-hidden="true"></i>
-                            <span>{{$item->description}}</span>
+                          <a href="" class="d-block mb-2">
+                            <i class="fa fa-phone text-danger" aria-hidden="true"></i>
+                            <span class="text-secondary">{{$item->description}}</span>
                           </a>
                         @else 
-                          <a href="">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                            <span>{{$item->description}}</span>
+                          <a href="" class="d-block mb-2">
+                            <i class="fa fa-envelope text-danger" aria-hidden="true"></i>
+                            <span class="text-secondary">{{$item->description}}</span>
                           </a>
                         @endif
                       @endforeach
@@ -90,7 +90,7 @@
                   @endif
                   @if ($media && count($media))
                   <div class="col-md-6 col-lg-4">
-                    <h6>
+                    <h6 class="text-white">
                       social media
                     </h6>
 
@@ -99,7 +99,7 @@
                           @foreach ($media as $social)
                               <li>
                                   <a href="{{$social->description}}" target="_blank">
-                                    <i class="fa-brands 
+                                    <i class="text-danger fa-brands 
                                       @if($social->title == 'facebook')
                                         fa-facebook
                                       @elseif($social->title == 'x_twitter')
@@ -124,7 +124,7 @@
             <!-- footer section -->
             <footer class=" footer_section">
               <div class="container">
-                <p class="text-uppercase">
+                <p class="text-uppercase text-secondary">
                   &copy; <span id="displayYear"></span> All Rights Reserved By
                   amine mokeddem
                 </p>
