@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -13,7 +15,7 @@ class ProfileController extends Controller
     }
     
     public function profilePage(){
-
-        return view('user.profile');
+        $addresses = Address::where('user_id',Auth::user()->id)->get();
+        return view('user.profile',compact('addresses'));
     }
 }

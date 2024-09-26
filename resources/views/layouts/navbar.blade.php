@@ -22,11 +22,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{route('testimonial')}}">
-              Testimonial
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="{{route('contact')}}">Contact Us</a>
           </li>
         </ul>

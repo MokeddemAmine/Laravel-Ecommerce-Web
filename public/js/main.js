@@ -46,4 +46,12 @@ $(document).ready(function(){
     $('#filtering').css('left','-200%');
     $('#btn-filtering').css('left','0')
    })
+
+   // delete action 
+   $('.btn-delete').click(function(){
+    let confirmation = confirm('you want to delete this');
+    if(confirmation){
+        $(this).parent().siblings('form.form-delete').submit();
+    }
+   })
 })

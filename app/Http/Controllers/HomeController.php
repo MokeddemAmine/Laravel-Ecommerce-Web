@@ -44,9 +44,6 @@ class HomeController extends Controller
         $attributes = Attribute::all();
         return view('shop',compact('products','categories','attributes'));
     }
-    public function testimonial(){
-        return view('testimonial');
-    }
     public function why(){
         return view('why');
     }

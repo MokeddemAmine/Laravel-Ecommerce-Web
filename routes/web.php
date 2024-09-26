@@ -7,6 +7,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\user\addressController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +29,6 @@ Auth::routes(['verify'  => true]);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact');
 Route::get('/shop', [App\Http\Controllers\HomeController::class, 'shop'])->name('shop');
-Route::get('/testimonial', [App\Http\Controllers\HomeController::class, 'testimonial'])->name('testimonial');
 Route::get('/why', [App\Http\Controllers\HomeController::class, 'why'])->name('why');
 Route::get('/shop/search_products',[App\Http\Controllers\HomeController::class, 'search_products'])->name('search.products');
 
@@ -67,7 +67,13 @@ Route::controller(ProductController::class)->group(function(){
     });
 
     Route::controller(ProfileController::class)->group(function(){
-        Route::get('/user/profile','profilePage')->name('user.profile');
+        Route::get('/profile','profilePage')->name('user.profile');
+    });
+
+    Route::controller(addressController::class)->group(function(){
+        Route::get('/profile/address','create')->name('user.profile.address');
+        Route::post('/profile/address','store')->name('user.profile.address.store');
+        Route::delete('/profile/address/{address}','destroy')->name('user.profile.address.destroy');
     });
 
     Route::controller(MessageController::class)->group(function(){
