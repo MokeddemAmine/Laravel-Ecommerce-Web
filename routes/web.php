@@ -30,6 +30,7 @@ Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])-
 Route::get('/shop', [App\Http\Controllers\HomeController::class, 'shop'])->name('shop');
 Route::get('/testimonial', [App\Http\Controllers\HomeController::class, 'testimonial'])->name('testimonial');
 Route::get('/why', [App\Http\Controllers\HomeController::class, 'why'])->name('why');
+Route::get('/shop/search_products',[App\Http\Controllers\HomeController::class, 'search_products'])->name('search.products');
 
 Route::controller(ProductController::class)->group(function(){
     Route::get('products/{slug}','show')->name('products.show');

@@ -2329,7 +2329,7 @@ textarea.form-control-lg {
   display: block;
   min-height: 1.44rem;
   padding-left: 1.5em;
-  margin-bottom: 0.125rem;
+  margin-bottom: 0.4rem;
 }
 .form-check .form-check-input {
   float: left;
@@ -2367,6 +2367,7 @@ textarea.form-control-lg {
           print-color-adjust: exact;
 }
 .form-check-input[type=checkbox] {
+  padding:.5rem;
   border-radius: 0.25em;
 }
 .form-check-input[type=radio] {
@@ -2381,8 +2382,8 @@ textarea.form-control-lg {
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 .form-check-input:checked {
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: #3a3a3a;
+  border-color: #3a3a3a;
 }
 .form-check-input:checked[type=checkbox] {
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
@@ -12039,4 +12040,34 @@ input.input-quantity{
 .attribute-value.hover , .attribute-value.active{
   background-color: #777;
   color:white;
+}
+.attributes .form-check-input{
+  display: none;
+}
+.attributes .form-check-label{
+  padding:.5rem;
+  width:60px;
+  height:40px;
+  border:1px solid darkgray;
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  cursor:pointer;
+  border-radius:.5rem;
+}
+.attribute-checked{
+  background-color: #323232;
+  color:white;
+}
+.attribute-checked-color{
+  border: 2px solid #323232 !important;
+}
+.filter-values{
+  display:none;
+}
+.input-prices{
+  width:100px;
+  padding:.5rem;
+  border-radius: 1rem;
+  border-color:darkgray;
 }
