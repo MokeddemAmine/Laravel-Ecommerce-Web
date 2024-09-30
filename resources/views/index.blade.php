@@ -74,7 +74,7 @@
                         $images = json_decode($product->images);
                     @endphp
                     <div class="img-box">
-                      <img src="{{asset('storage/'.$images[0])}}" alt="">
+                      <img src="{{asset('storage/'.$images[0])}}" alt="" >
                     </div>
                     <div class="detail-box">
                       <h6>{!!Str::limit($product->title,30)!!}</h6>

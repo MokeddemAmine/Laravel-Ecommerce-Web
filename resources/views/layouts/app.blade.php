@@ -90,7 +90,7 @@
                   @endif
                   @if ($media && count($media))
                   <div class="col-md-6 col-lg-4">
-                    <h6 class="text-white">
+                    <h6 class="text-white text-capitalize">
                       social media
                     </h6>
 
