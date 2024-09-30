@@ -33,7 +33,11 @@
                 </div>
                 <div class="col-md-3">
                     <a href="" class="btn btn-success btn-sm text-capitalize">edit</a>
-                    <a href="" class="btn btn-danger btn-sm text-capitalize">delete</a>
+                    <form action="{{route('admin.dashboard.attributes.destroy',$attribute->id)}}" method="POST" class="form-delete-attribute d-none">
+                        @csrf 
+                        @method('DELETE')
+                    </form>
+                    <button class="btn btn-danger btn-sm text-capitalize delete-attribute">delete</button>
                 </div>
                 </div>
             @endforeach
@@ -62,7 +66,7 @@
                 cancelButtonColor: "#d33",
             }).then((result) => {
                 if(result.isConfirmed){
-                    $(this).siblings('.form-delete-product').submit();
+                    $(this).siblings('.form-delete-attribute').submit();
                 }
             });
         })

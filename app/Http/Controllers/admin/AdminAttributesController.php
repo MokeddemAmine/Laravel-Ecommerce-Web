@@ -47,6 +47,10 @@ class AdminAttributesController extends Controller
 
     }
 
+    public function destroy(Attribute $attribute){
+        $attribute->delete();
+        return redirect()->back()->with('successMessage','Attribute deleted with success');
+    }
     public function get_values(Request $request){
 
         $request->validate([

@@ -10,7 +10,7 @@
                 <div class="card-header">{{ __('Admin Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.dashboard.checkLogin') }}">
+                    <form method="POST" action="{{ route('admin.checkLogin') }}">
                         @csrf
                         @if (session('registerSuccess'))
                             <div class="row mb-3">

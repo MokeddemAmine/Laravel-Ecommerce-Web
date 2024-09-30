@@ -87,6 +87,7 @@
                     </form>
                 </div>
             </div>
+            <a href="{{route('admin.dashboard.key.index')}}" class="d-block my-3 text-danger text-capitalize"><i class="fa-solid fa-key"></i> admin keys</a>
         </div>
 
         <div class="text-center">

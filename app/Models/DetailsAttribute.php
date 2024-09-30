@@ -19,7 +19,7 @@ class DetailsAttribute extends Model
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'value'
             ]
         ];
     }

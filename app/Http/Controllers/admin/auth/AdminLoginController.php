@@ -47,6 +47,6 @@ class AdminLoginController extends Controller
         //     return $response;
         // }
         
-        return redirect()->route('admin.dashboard.login');
+        return redirect()->route('admin.login');
     }
 }

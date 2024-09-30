@@ -10,7 +10,7 @@
                 <div class="card-header">{{ __('Admin Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.dashboard.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('admin.store') }}" enctype="multipart/form-data">
                         @csrf
                         
                         @if (session('errorResponse'))

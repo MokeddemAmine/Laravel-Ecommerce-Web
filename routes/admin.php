@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminAttributesController;
+use App\Http\Controllers\admin\AdminAuthController;
 use App\Http\Controllers\admin\AdminCategoryController;
 use App\Http\Controllers\admin\AdminHomeController;
 use App\Http\Controllers\admin\AdminProductController;
@@ -26,7 +27,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
+Route::prefix('/admin')->name('admin.')->group(function(){
+
+    Route::controller(AdminLoginController::class)->group(function(){
+        Route::get('login','login')->name('login');
+        Route::post('login','checkLogin')->name('checkLogin');
+        Route::post('logout','logout')->name('logout')->middleware('auth:admin');
+    });
+
+    Route::controller(AdminRegisterController::class)->group(function(){
+        Route::get('register','register')->name('register');
+        Route::post('register','store')->name('store');
+    });
+
+    Route::prefix('/dashboard')->name('dashboard.')->group(function(){
+
 
     Route::controller(AdminHomeController::class)->group(function(){
         Route::get('/','index')->name('index');
@@ -63,6 +78,7 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
         Route::get('/attributes','index')->name('attributes.index');
         Route::get('/attributes/create','create')->name('attributes.create');
         Route::post('/attributes','store')->name('attributes.store');
+        Route::delete('/attributes/{attribute}','destroy')->name('attributes.destroy');
         Route::get('/attributres/get_values','get_values')->name('attributes.get.values');
     });
 
@@ -81,17 +97,6 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
         Route::get('/messages/{message}','show')->name('messages.show');
         Route::delete('/messages/{message}','destroy')->name('messages.destroy');
         Route::post('/unread_messages','unread_messages')->name('messages.unread_messages');
-    });
-
-    Route::controller(AdminLoginController::class)->group(function(){
-        Route::get('login','login')->name('login');
-        Route::post('login','checkLogin')->name('checkLogin');
-        Route::post('logout','logout')->name('logout')->middleware('auth:admin');
-    });
-
-    Route::controller(AdminRegisterController::class)->group(function(){
-        Route::get('register','register')->name('register');
-        Route::post('register','store')->name('store');
     });
 
     
@@ -124,6 +129,17 @@ Route::prefix('/admin/dashboard')->name('admin.dashboard.')->group(function(){
                 Route::post('/','update')->name('update');
             });
         });
+    });
+
+    Route::controller(AdminAuthController::class)->group(function(){
+        Route::prefix('/key')->name('key.')->group(function(){
+            Route::get('/','index')->name('index');
+            Route::get('/create','create')->name('create');
+            Route::post('/','store')->name('store');
+            Route::delete('/{key}','destroy')->name('destroy');
+        });
+    });
+
     });
 });
 

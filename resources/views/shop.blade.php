@@ -8,7 +8,7 @@
     $max_price = null;
     $sort_by = null;
     $cats = [];
-    $attrs = collect($_GET)->except(['min_price','max_price','sort_by','categories'])->toArray();
+    $attrs = collect($_GET)->except(['min_price','max_price','sort_by','categories','page'])->toArray();
     $attrs_values = [];
     foreach($attrs as $key => $values){
       foreach($values as $value){
@@ -195,15 +195,17 @@
                   </div>
               </div>
             </div>
+            
           @endforeach
+          @if ($products && count($products))
+            <div class="d-flex justify-content-center my-4">{{$products->links()}}</div>
+            @endif
         @else 
           <div class="fw-bold  text-info my-3">There are no product</div>
         @endif
         
       </div>
-      @if ($products && count($products))
-      <div class="d-flex justify-content-center my-4">{{$products->onEachSide(1)->links()}}</div>
-      @endif
+      
       
     </div>
   </section>

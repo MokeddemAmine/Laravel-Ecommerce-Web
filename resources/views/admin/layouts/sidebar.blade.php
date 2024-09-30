@@ -17,8 +17,8 @@
     <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
     <ul class="list-unstyled" id="sidebar-links-icons">
           @guest('admin')
-            <li><a href="{{route('admin.dashboard.login')}}"> <i class="icon-home"></i>Login </a></li>
-            <li><a href="{{route('admin.dashboard.register')}}"> <i class="icon-home"></i>Register </a></li>
+            <li><a href="{{route('admin.login')}}"> <i class="icon-home"></i>Login </a></li>
+            <li><a href="{{route('admin.register')}}"> <i class="icon-home"></i>Register </a></li>
           @else
           
             <li><a href="{{route('admin.dashboard.index')}}"> <i class="icon-home"></i>Home </a></li>  
